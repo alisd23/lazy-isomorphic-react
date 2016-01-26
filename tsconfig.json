@@ -1,0 +1,50 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "outDir": "build",
+        "target": "ES5",
+        "rootDir": "."
+    },
+    "filesGlob": [
+        "./src/**/*.tsx",
+        "./src/**/*.ts",
+        "./typings/**/*.d.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    },
+    "files": [
+        "./src/app.tsx",
+        "./src/components/Cart.tsx",
+        "./src/components/Product.tsx",
+        "./src/components/ProductItem.tsx",
+        "./src/components/ProductsList.tsx",
+        "./src/containers/App.tsx",
+        "./src/containers/CartContainer.tsx",
+        "./src/containers/ProductsContainer.tsx",
+        "./src/actions/index.ts",
+        "./src/api/shop.ts",
+        "./src/constants/ActionTypes.ts",
+        "./src/interfaces/Product.ts",
+        "./src/reducers/cart.ts",
+        "./src/reducers/index.ts",
+        "./src/reducers/products.ts",
+        "./typings/classnames.d.ts",
+        "./typings/console.d.ts",
+        "./typings/fetch.d.ts",
+        "./typings/Object.d.ts",
+        "./typings/promise.d.ts",
+        "./typings/react/react-addons-css-transition-group.d.ts",
+        "./typings/react/react-addons-transition-group.d.ts",
+        "./typings/react/react-dom.d.ts",
+        "./typings/react/react.d.ts",
+        "./typings/redux/react-redux.d.ts",
+        "./typings/redux/redux-logger.d.ts",
+        "./typings/redux/redux-thunk.d.ts",
+        "./typings/redux/redux.d.ts",
+        "./typings/require.d.ts"
+    ]
+}
