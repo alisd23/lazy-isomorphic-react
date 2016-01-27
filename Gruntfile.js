@@ -78,7 +78,7 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('pre-compile',     ['clean', 'ts', 'sass']);
+  grunt.registerTask('pre-compile',     ['clean', 'ts']);
   grunt.registerTask('compile',         ['pre-compile', 'copy', 'webpack']);
   grunt.registerTask('run-server',      ['express:dev']);
   grunt.registerTask('restart-server',  ['express:dev:stop', 'express:dev']);

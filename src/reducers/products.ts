@@ -41,6 +41,6 @@ export function getProduct(products: IProductsState, id) : IProduct {
   return products[id];
 }
 
-export function getVisibleProducts(products: IProductsState) : IProduct[] {
+export function getVisibleProducts(products: IProductsState = []) : IProduct[] {
   return Object.keys(products).map((id) => products[id]);
 }

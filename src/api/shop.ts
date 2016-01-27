@@ -12,7 +12,7 @@ export default {
   getProducts(callback: Function, timeout?: number) {
     fetch('/products')
       .then((response) => response.json())
-      .then((products) => callback(products))
+      .then((products) => (callback(products), console.log(products)))
       .catch((err) => console.debug(err));
   },
 

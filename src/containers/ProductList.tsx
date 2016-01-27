@@ -6,14 +6,14 @@ import ProductItem from '../components/ProductItem'
 import ProductsList from '../components/ProductsList'
 import IProduct from '../interfaces/Product';
 
-interface IProductsContainerProps {
+interface IProductListProps {
   products?: IProduct[];
   addToCart?: React.EventHandler<any>;
 }
 
-class ProductsContainer extends React.Component<IProductsContainerProps, {}> {
+class ProductList extends React.Component<IProductListProps, {}> {
 
-  render() : React.ReactElement<IProductsContainerProps> {
+  render() : React.ReactElement<IProductListProps> {
     const { products } = this.props;
     return (
       <ProductsList title="Products">
@@ -37,4 +37,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   { addToCart }
-)(ProductsContainer)
+)(ProductList)

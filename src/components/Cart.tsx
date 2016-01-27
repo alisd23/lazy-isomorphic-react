@@ -19,15 +19,16 @@ class Cart extends React.Component<ICartProps, {}> {
             title={product.title}
             price={product.price}
             quantity={product.quantity}
+            id={product.id}
             key={product.id} />
         );
 
     return (
-      <div>
-        <h3>Your Cart 1</h3>
+      <div className="p-a-2">
+        <h3 className="m-b-2">Your Cart</h3>
         <div>{nodes}</div>
-        <p>Total: £{this.props.total}</p>
-        <button onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
+        <p className="m-b-2">Total: £{this.props.total}</p>
+        <button className="btn btn-success-outline " onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
           Checkout
         </button>
       </div>

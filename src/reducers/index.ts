@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { default as cart, ICartState, getQuantity, getAddedIds } from './cart'
 import { default as products, IProductsState, getProduct } from './products'
+import { routeReducer } from 'react-router-redux';
 
 interface IMainState {
   cart?: ICartState;
@@ -24,9 +25,15 @@ export function getCartProducts(state: IMainState) {
   ))
 }
 
-
-// Top level Reducers
-export default combineReducers({
-  cart,
-  products
-})
+export default function createReducer(asyncReducers: any = {}) {
+  const reducers = {
+    cart,
+    products,
+    routing: routeReducer
+  }
+  return combineReducers(Object.assign(
+    {},
+    reducers,
+    asyncReducers
+  ));
+}
