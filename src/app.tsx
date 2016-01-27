@@ -1,24 +1,29 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { createDevTools } from 'redux-devtools'
-import LogMonitor from 'redux-devtools-log-monitor'
-import DockMonitor from 'redux-devtools-dock-monitor'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import * as logger from 'redux-logger';
-import * as thunk from 'redux-thunk';
-import { Router, Route, IndexRoute, browserHistory  } from 'react-router';
-import { syncHistory } from 'react-router-redux';
+import { Router, Route, IndexRoute } from 'react-router';
+import LogMonitor from 'redux-devtools-log-monitor';
+import DockMonitor from 'redux-devtools-dock-monitor';
+import { createDevTools } from 'redux-devtools';
 
 import createReducer from './reducers';
 import { getAllProducts } from './actions';
 import Main from './containers/Main';
 import App from './containers/App';
 import Product from './containers/Product';
+import ReducerRegistry from './ReducerRegistry';
+import { browserHistory } from 'react-router';
+
+import configureRoutes from './configureRoutes';
+import configureStore from './configureStore';
 
 // Import stylesheets
 import '../../sass/common.scss';
+
+import coreReducers from './reducers/core';
+const reducerRegistry = new ReducerRegistry(coreReducers);
 
 const DevTools = createDevTools(
   <DockMonitor toggleVisibilityKey="ctrl-h"
@@ -28,31 +33,15 @@ const DevTools = createDevTools(
   </DockMonitor>
 )
 
-const historyMiddleware = syncHistory(browserHistory);
-
-const reducer = createReducer();
-
-const middleware = [thunk, logger(), historyMiddleware];
-
-const finalCreateStore = compose(
-  applyMiddleware(...middleware),
-  DevTools.instrument()
-)(createStore);
-const store = finalCreateStore(reducer);
-
-historyMiddleware.listenForReplays(store);
+const routes = configureRoutes(reducerRegistry);
+const store = configureStore(reducerRegistry, DevTools);
 
 store.dispatch(getAllProducts());
 
 render(
   <Provider store={store}>
     <div>
-      <Router history={browserHistory}>
-       <Route path="/" component={App}>
-         <IndexRoute component={Main}/>
-         <Route path="/product/:id" component={Product}/>
-       </Route>
-      </Router>
+      <Router history={browserHistory} routes={routes} />
       <DevTools />
     </div>
   </Provider>,
