@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router } from 'react-router';
 import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import { createDevTools } from 'redux-devtools';
 
-import createReducer from './reducers';
 import { getAllProducts } from './actions';
-import Main from './containers/Main';
-import App from './containers/App';
-import Product from './containers/Product';
 import ReducerRegistry from './ReducerRegistry';
 import { browserHistory } from 'react-router';
 
