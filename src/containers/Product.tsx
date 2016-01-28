@@ -8,7 +8,6 @@ import { addToCart } from '../actions';
 import { changeRating } from '../actions/productPage';
 import classnames = require('classnames');
 
-
 interface ProductParams {
   id: number;
 }
@@ -35,11 +34,12 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
   render() : React.ReactElement<IProductContainerProps> {
     const Rating = [];
     for (let i = 1 ; i <= this.props.maxRating ; i++) {
+      const rating = i;
       const classes = classnames(
         'material-icons md-48 star',
         this.props.rating < i ? 'light' : 'star-gold'
       );
-      Rating.push(<i onClick={() => this.props.changeRating(i)} key={i} className={classes}>star</i>);
+      Rating.push(<i onClick={() => this.props.changeRating(rating)} key={rating} className={classes}>star</i>);
     }
 
     return (
