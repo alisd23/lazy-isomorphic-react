@@ -5,6 +5,8 @@ import { getProduct, getVisibleProducts, IProductsState } from '../reducers/prod
 import IProduct from '../interfaces/Product';
 import IAppPage from '../interfaces/AppPage';
 import { addToCart } from '../actions';
+import { changeRating } from '../actions/productPage';
+import classnames = require('classnames');
 
 
 interface ProductParams {
@@ -12,7 +14,10 @@ interface ProductParams {
 }
 interface IProductContainerProps extends IAppPage<ProductParams> {
   products: IProduct[];
-  addToCart?: React.EventHandler<any>;
+  rating: number;
+  maxRating: number;
+  addToCart?: Function;
+  changeRating?: Function;
   push?: (String) => any;
 }
 interface IProductContainerState {
@@ -28,12 +33,26 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
   }
 
   render() : React.ReactElement<IProductContainerProps> {
+    const Rating = [];
+    for (let i = 1 ; i <= this.props.maxRating ; i++) {
+      const classes = classnames(
+        'material-icons md-48 star',
+        this.props.rating < i ? 'light' : 'star-gold'
+      );
+      Rating.push(<i onClick={() => this.props.changeRating(i)} key={i} className={classes}>star</i>);
+    }
+
     return (
-      <div>
+      <div id="product-page">
         {
           this.state.product &&
             <div className="p-y-3">
-              <h2>{this.state.product.title}</h2>
+              <h2>
+                {this.state.product.title}
+                <span className="p-l-1">
+                  { Rating }
+                </span>
+              </h2>
               <h3><strong>£{this.state.product.price}</strong></h3>
               <button className="btn btn-primary m-t-3" onClick={() => this.addToCart()}>
                 Add to Cart
@@ -52,7 +71,9 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
 
 function mapStateToProps(state) {
   return {
-    products: getVisibleProducts(state.products)
+    products: getVisibleProducts(state.products),
+    rating: state.productPage.rating,
+    maxRating: state.productPage.maxRating
   }
 }
 
@@ -60,6 +81,6 @@ export default connect(
   mapStateToProps,
   Object.assign({},
     routeActions,
-    {addToCart}
+    { addToCart, changeRating }
   ) as any
 )(ProductContainer)

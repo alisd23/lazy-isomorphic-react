@@ -8,7 +8,7 @@ import DockMonitor from 'redux-devtools-dock-monitor';
 import { createDevTools } from 'redux-devtools';
 
 import { getAllProducts } from './actions';
-import ReducerRegistry from './ReducerRegistry';
+import ReducerRegistry from './reducers/ReducerRegistry';
 import { browserHistory } from 'react-router';
 
 import configureRoutes from './configureRoutes';

@@ -11,6 +11,11 @@ export default function configureRoutes(reducerRegistry) {
       <IndexRoute component={Main} />
       <Route path="/product/:id" getComponent={(location, cb) => {
         (require as any).ensure([], require => {
+          // Load REDUCER
+          reducerRegistry.register({ productPage: require('./reducers/productPage').default });
+          // Load STYLES
+          require('../../sass/productPage.scss');
+          // Load REACT COMPONENT
           cb(null, require('./containers/Product').default);
         });
       }} />
