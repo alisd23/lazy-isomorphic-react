@@ -1,1 +1,0 @@
-export const CHANGE_RATING = 'CHANGE_RATING';

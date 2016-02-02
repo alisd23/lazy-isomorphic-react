@@ -25,7 +25,9 @@ module.exports = function(grunt) {
           { expand: true, src: ['icons/**/*'], dest: 'build/' },
           { expand: true, src: ['lib/**/*'], dest: 'build/' },
           { expand: true, src: ['src/**/*.json'], dest: 'build/' },
-          { src: 'index.html', dest: 'build/index.html' }
+          { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf'], dest: 'assets/fonts/' },
+          { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff'], dest: 'assets/fonts/' },
+          { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff2'], dest: 'assets/fonts/' }
         ]
       }
     },
@@ -34,7 +36,7 @@ module.exports = function(grunt) {
         additionalFlags: '--jsx react'
       },
       default: {
-        tsconfig: true
+        tsconfig: './typescript'
       }
     },
     sass: {
@@ -72,7 +74,7 @@ module.exports = function(grunt) {
         tasks: ['copy', 'restart-server']
       },
       express: {
-        files: ['server.js', 'server/**/*.js'],
+        files: ['server.js', '/javascript/server/**/*.js'],
         tasks: ['restart-server'],
       }
     },

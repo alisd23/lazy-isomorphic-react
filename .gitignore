@@ -4,3 +4,6 @@ messages
 .idea/
 npm-debug.log
 .tscache/
+javascript
+ts-command-*
+webpack-assets.json
