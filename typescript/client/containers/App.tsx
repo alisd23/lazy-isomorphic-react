@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import Navbar from './Navbar';
 import config from '../../config';
-import getClass from '../../helpers/classesHelper';
 const Helmet = require('react-helmet');
+
 
 interface IAppProps {
   children: React.ReactElement<any>[];
@@ -14,13 +14,14 @@ interface IAppProps {
 class App extends React.Component<IAppProps, {}> {
 
   render() : React.ReactElement<{}> {
-    const styles = require('../../../sass/common.scss');
+    // Import styles
+    require('../../../sass/common.scss');
 
     return (
       <div>
         <Helmet {...config.app.head}/>
         <Navbar />
-        <div className={getClass('container', styles)}>
+        <div className="container">
           {this.props.children}
         </div>
       </div>

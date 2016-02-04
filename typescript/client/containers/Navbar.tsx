@@ -4,7 +4,8 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { ILocation } from 'history';
 import { routeActions } from 'react-router-redux';
-import getClass from '../../helpers/classesHelper';
+
+// Import styles
 
 interface INavbarProps {
   push?: (String) => any;
@@ -21,14 +22,14 @@ const links = [
 class Navbar extends React.Component<INavbarProps, {}> {
 
   render() : React.ReactElement<{}> {
-    const styles = require('../../../sass/common.scss');
+    require('../../../sass/common.scss');
 
     return (
-      <nav className={getClass("navbar navbar-light bg-faded container-fluid", styles)}>
-        <a className={getClass("navbar-brand", styles)} onClick={() => this.props.push('/')}>
-          <i className={getClass("material-icons md-24", styles)} style={{verticalAlign: 'middle'}}>shopping_cart</i>
+      <nav className="navbar navbar-light bg-faded container-fluid">
+        <a className="navbar-brand" onClick={() => this.props.push('/')}>
+          <i className="material-icons md-24" style={{verticalAlign: 'middle'}}>shopping_cart</i>
         </a>
-        <ul className={getClass("nav navbar-nav", styles)}>
+        <ul className="nav navbar-nav">
         {
           links.map((link) => {
             const classes = classNames({
@@ -37,8 +38,8 @@ class Navbar extends React.Component<INavbarProps, {}> {
               'nav-item'
             );
             return (
-              <li className={getClass(classes, styles)} key={link.title}>
-                <a className={getClass("nav-link", styles)} onClick={() => this.props.push(link.path)}>{link.title}</a>
+              <li className={classes} key={link.title}>
+                <a className="nav-link" onClick={() => this.props.push(link.path)}>{link.title}</a>
               </li>
             )
           })

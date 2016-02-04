@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Product from './Product';
 import IProduct from '../interfaces/Product';
-import getClass from '../../helpers/classesHelper';
+
 
 interface ICartProps {
   products: IProduct[];
@@ -11,7 +11,8 @@ interface ICartProps {
 
 class Cart extends React.Component<ICartProps, {}> {
   render() : React.ReactElement<ICartProps> {
-    const styles = require('../../../sass/common.scss');
+    // Import styles
+    require('../../../sass/common.scss');
 
     const hasProducts = this.props.products.length > 0;
     const nodes = !hasProducts
@@ -26,11 +27,11 @@ class Cart extends React.Component<ICartProps, {}> {
         );
 
     return (
-      <div className={getClass("p-a-2", styles)}>
-        <h3 className={getClass("m-b-2", styles)}>Your Cart</h3>
+      <div className="p-a-2">
+        <h3 className="m-b-2">Your Cart</h3>
         <div>{nodes}</div>
-        <p className={getClass("m-b-2", styles)}>Total: £{this.props.total}</p>
-        <button className={getClass("btn btn-success-outline", styles)} onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
+        <p className="m-b-2">Total: £{this.props.total}</p>
+        <button className="btn btn-success-outline" onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
           Checkout
         </button>
       </div>

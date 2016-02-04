@@ -31,18 +31,15 @@ function loadContent(contentData: IContentData) {
 export default function configureRoutes(reducerRegistry) {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Main} />
+      <IndexRoute getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./containers/Main').default);
+        });
+      }} />
       <Route path="/product/:id" getComponent={(location, cb) => {
         require.ensure([], require => {
-          loadContent({
-            callback: cb,
-            component: require('./containers/Product').default,
-            reducer: {
-              name: 'productPage',
-              reducer: require('./reducers/productPage').default
-            },
-            reducerRegistry: reducerRegistry
-          });
+          reducerRegistry.register({ ['productPage']: require('./reducers/productPage').default });
+          cb(null, require('./containers/Product').default);
         });
       }} />
     </Route>

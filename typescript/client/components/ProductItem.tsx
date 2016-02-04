@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Product from './Product';
 import IProduct from '../interfaces/Product';
-import getClass from '../../helpers/classesHelper';
 
 interface IProductItemProps {
   product: IProduct;
@@ -12,21 +11,22 @@ interface IProductItemProps {
 class ProductItem extends React.Component<IProductItemProps, {}> {
 
   render() : React.ReactElement<IProductItemProps> {
-    const styles = require('../../../sass/common.scss');
+    // Import styles
+    require('../../../sass/common.scss');
     const { product } = this.props;
 
     return (
-      <div className={getClass("m-b-2 flex", styles)}>
-        <div className={getClass("flex-expand", styles)}>
+      <div className="m-b-2 flex">
+        <div className="flex-expand">
           <Product
             title={product.title}
             price={product.price}
             id={product.id} />
         </div>
-        <div className={getClass("flex-static", styles)}>
+        <div className="flex-static">
           <button
             onClick={this.props.onAddToCartClicked}
-            className={getClass("btn btn-sm btn-primary-outline", styles)}
+            className="btn btn-sm btn-primary-outline"
             disabled={!product.quantity}>
             {product.quantity > 0 ? 'Add to cart' : 'Sold Out'}
           </button>

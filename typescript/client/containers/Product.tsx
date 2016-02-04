@@ -6,11 +6,7 @@ import IProduct from '../interfaces/Product';
 import IAppPage from '../interfaces/AppPage';
 import { addToCart } from '../redux/modules/shared';
 import { changeRating } from '../redux/modules/productPage';
-import getClass from '../../helpers/classesHelper';
 import classnames = require('classnames');
-
-// Import scss
-import '../../../sass/productPage.scss';
 
 interface ProductParams {
   id: number;
@@ -36,10 +32,8 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
   }
 
   render() : React.ReactElement<IProductContainerProps> {
-    const styles = Object.assign({},
-      require('../../../sass/common.scss'),
-      require('../../../sass/productPage.scss')
-    );
+    require('../../../sass/common.scss');
+    require('../../../sass/productPage.scss');
 
     const Rating = [];
     let i;
@@ -49,23 +43,23 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
           'material-icons md-24 star',
           this.props.rating < i ? 'light' : 'star-gold'
         );
-        Rating.push(<i onClick={() => this.props.changeRating(rating)} key={rating} className={getClass(classes, styles)}>star</i>);
+        Rating.push(<i onClick={() => this.props.changeRating(rating)} key={rating} className={classes}>star</i>);
       })(i);
     }
 
     return (
-      <div id={getClass("product-page", styles)}>
+      <div id="product-page">
         {
           this.state.product &&
-            <div className={getClass("p-y-3", styles)}>
+            <div className="p-y-3">
               <h2>
                 {this.state.product.title}
-                <span className={getClass("p-l-1", styles)}>
+                <span className="p-l-1">
                   { Rating }
                 </span>
               </h2>
               <h3><strong>£{this.state.product.price}</strong></h3>
-              <button className={getClass("btn btn-primary m-t-3", styles)} onClick={() => this.addToCart()}>
+              <button className="btn btn-primary m-t-3" onClick={() => this.addToCart()}>
                 Add to Cart
               </button>
             </div>

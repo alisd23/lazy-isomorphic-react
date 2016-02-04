@@ -5,13 +5,12 @@ const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack/webpack-isomorphic-tools'));
-
-require('node-noop');
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
 module.exports = {
 	cache: true,
   devtool: 'inline-source-map',
+	context: path.resolve(__dirname, '..'),
   progress: true,
 	entry: [
     'webpack-dev-server/client?http://localhost:9000', // WebpackDevServer host and port
@@ -50,7 +49,7 @@ module.exports = {
 			},
       {
         test: /\.scss$/,
-        loader: 'style!css?modules&importLoaders=1&sourceMap&localIdentName=[local]___[hash:base64:5]!sass?outputStyle=expanded&sourceMap',
+        loaders: ['style', 'css', 'sass'],
 				// include: path.join(__dirname, 'sass')
       },
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -59,5 +58,17 @@ module.exports = {
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
 		]
+	},
+
+	// LOADER config
+	cssLoader: {
+		modules: false,			// Enables local scoped css (hash-like class names specific to components)
+		localIdentName: '[local]___[hash:base64:5]',		// Name format for local scoped class names (if set)
+		importLoaders: 1,		// Which loaders should be applied to @imported resources (How many after css loader)
+		sourceMap: true
+	},
+	sassLoader: {
+		sourceMap: true,
+		outputStyle: 'expanded'
 	}
 };

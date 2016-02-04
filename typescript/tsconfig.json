@@ -43,7 +43,6 @@
         "./client/redux/modules/shared.ts",
         "./client/redux/ReducerRegistry.ts",
         "./config.ts",
-        "./helpers/classesHelper.ts",
         "./server/webpack-server.ts",
         "./typings/classnames.d.ts",
         "./typings/fetch.d.ts",

@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux';
 import IProduct from '../interfaces/product';
-import getClass from '../../helpers/classesHelper';
 
 interface IProductProps {
   key?: any;
@@ -17,8 +16,9 @@ interface IProductProps {
 class Product extends React.Component<IProductProps, {}> {
 
   render() : React.ReactElement<IProductProps> {
-    const styles = require('../../../sass/common.scss');
-    
+    // Import styles
+    require('../../../sass/common.scss');
+
     return (
       <div>
         <a onClick={() => this.props.push(`/product/${this.props.id}`)}>

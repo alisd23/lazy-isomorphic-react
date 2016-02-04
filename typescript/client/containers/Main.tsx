@@ -4,16 +4,16 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import ProductList from './ProductList';
 import CartContainer from './Cart';
-import getClass from '../../helpers/classesHelper';
 
 class Main extends React.Component<{}, {}> {
 
   render() : React.ReactElement<{}> {
-    const styles = require('../../../sass/common.scss');
+    // Import styles
+    require('../../../sass/common.scss');
 
     return (
       <div>
-        <h2 className={getClass('text-xs-center m-y-3', [styles])}>
+        <h2 className="text-xs-center m-y-3">
           Shopping Cart Example
         </h2>
         <hr/>

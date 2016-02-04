@@ -17,8 +17,9 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import configureRoutes from '../client/configureRoutes';
 import { configureServer } from '../client/configureStore';
 
-// Tell react that these variables exist at compile time
+// Tell react that these global variables exist at compile time
 declare var __DEVELOPMENT__: any;
+declare var __dirname: any;
 declare var webpackIsomorphicTools: any;
 
 export default (PORT) => {
@@ -30,7 +31,7 @@ export default (PORT) => {
    */
 
   // Serve build folder
-  app.use(express.static('../build'));
+  app.use(express.static(path.join(__dirname, '../..', 'build')));
   app.use(handleRender);
 
   /**
@@ -53,12 +54,12 @@ export default (PORT) => {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search)
       } else if (renderProps) {
 
-        // console.log(renderProps);
-
         // Compile an initial state
-        let initialState = {
-          products: _products
-          // cart: [1]
+        const products = {};
+        _products.forEach((p) => products[p.id] = p);
+
+        const initialState = {
+          products: products
         }
         const store = configureServer(reducerRegistry, initialState);
 
@@ -70,42 +71,22 @@ export default (PORT) => {
           </Provider>
         );
 
+        // Render the initial html
+        // - Store: Place initial state on the browser window object for the client to read on load
+        // - assets: Load the relevant assets into the markup using webpackIsomorphicTools
+        // - component: The main component to render in the html root
         const html = (
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         );
-
-        // console.log(html.props.assets);
 
         res
           .status(200)
           .send('<!doctype html>\n' + renderToString(html));
 
-        console.log("Lets go N");
       } else {
         res.status(404).send('Not found')
       }
     });
-
-  }
-
-  function renderFullPage(html, initialState) {
-    return `
-       <!DOCTYPE html>
-       <html>
-         <head>
-           <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet">
-           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-         </head>
-         <body>
-           <div id="root">${html}</div>
-           <div id="dev-tools"></div>
-           <script>
-             window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-           </script>
-           <script src="/bundle.js"></script>
-         </body>
-       </html>
-     `;
   }
 
   app.get('/products', function(req, res) {

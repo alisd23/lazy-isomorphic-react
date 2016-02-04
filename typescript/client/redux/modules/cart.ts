@@ -13,16 +13,11 @@ interface ICartItem {
   id: number;
   quantity: number;
 }
-interface ICartItemsObject {
+export interface ICartState {
   [id: number]: ICartItem;
 }
-export interface ICartState {
-  items: ICartItemsObject;
-}
 
-const initialState: ICartState  = {
-  items: []
-}
+const initialState: ICartState = {}
 
 export default function handle(state: ICartState = initialState, action) : ICartState {
   switch (action.type) {
@@ -32,7 +27,7 @@ export default function handle(state: ICartState = initialState, action) : ICart
       return action.cart;
     case ADD_TO_CART:
       const productId = action.productId as number;
-      const currentItems = state.items;
+      const currentItems = state;
       const newItems = Object.assign(
         {},
         currentItems,
@@ -42,23 +37,18 @@ export default function handle(state: ICartState = initialState, action) : ICart
           }
         }
       );
-
-      return {
-        items: newItems
-      }
+      return newItems;
     default:
-      return {
-        items: state.items
-      };
+      return state;
   };
 }
 
 export function getQuantity(state: ICartState, productId: number | string) : number {
-  return state.items[productId].quantity || 0;
+  return state[productId].quantity || 0;
 }
 
 export function getAddedIds(state: ICartState) : string[] {
-  return Object.keys(state.items);
+  return Object.keys(state);
 }
 
 // Actions

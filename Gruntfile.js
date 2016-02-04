@@ -11,12 +11,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   var webpack = require("webpack");
-	var webpackConfig = require("./webpack.config.js");
+	var webpackConfig = require("./webpack/prod.config.js");
 
   grunt.initConfig({
     clean: ['build'],
     webpack: {
-			options: webpackConfig
+			main: webpackConfig
 		},
     copy: {
       main: {
@@ -33,10 +33,11 @@ module.exports = function(grunt) {
     },
     ts: {
       options: {
-        additionalFlags: '--jsx react'
+        additionalFlags: '--jsx react',
+        rootDir: './typescript'
       },
       default: {
-        tsconfig: './typescript'
+        tsconfig: './typescript/tsconfig.json'
       }
     },
     sass: {
@@ -50,7 +51,11 @@ module.exports = function(grunt) {
       }
     },
     express: {
-      dev: {},
+      dev: {
+        options: {
+          node_env: 'development'
+        }
+      },
       prod: {
         options: {
           node_env: 'production'
@@ -75,15 +80,16 @@ module.exports = function(grunt) {
       },
       express: {
         files: ['server.js', '/javascript/server/**/*.js'],
-        tasks: ['restart-server'],
+        tasks: ['restart-server']
       }
     },
   });
 
   grunt.registerTask('pre-compile',     ['clean', 'ts']);
-  grunt.registerTask('compile',         ['pre-compile', 'copy', 'webpack']);
-  grunt.registerTask('run-server',      ['express:dev']);
   grunt.registerTask('restart-server',  ['express:dev:stop', 'express:dev']);
-  grunt.registerTask('serve',           ['pre-compile', 'copy', 'run-server', 'watch']);
-  grunt.registerTask("default",         ['serve']);
+
+  grunt.registerTask('build',           ['pre-compile', 'copy', 'webpack']);
+  grunt.registerTask('serve:dev',       ['pre-compile', 'copy', 'express:dev', 'watch']);
+  grunt.registerTask('serve:prod',      ['express:prod', 'keepalive']);
+  grunt.registerTask("default",         ['serve:dev']);
 };

@@ -17,7 +17,6 @@ import coreReducers from './redux/core';
 import productPage from './redux/modules/productPage';
 
 const reducerRegistry = new ReducerRegistry(coreReducers);
-// const reducerRegistry = new ReducerRegistry(Object.assign({}, coreReducers, { productPage }));
 
 const DevTools = createDevTools(
   <DockMonitor toggleVisibilityKey="ctrl-h"
@@ -28,13 +27,18 @@ const DevTools = createDevTools(
   </DockMonitor>
 )
 
-const initialState = (window as any).__INITIAL_STATE__;
 const routes = configureRoutes(reducerRegistry);
-const store = configureClient(reducerRegistry, DevTools, initialState);
-console.log(initialState);
-console.log(browserHistory);
 
+/**
+ * This magic allows router to load correct reducer and components depending on which route we are in
+ */
 match({ history: browserHistory, routes } as any, (error, redirectLocation, renderProps) => {
+
+  const initialState = (window as any).__INITIAL_STATE__;
+  const store = configureClient(reducerRegistry, DevTools, initialState);
+
+  console.log(renderProps);
+
   render(
     <Provider store={store}>
       <div>
@@ -43,11 +47,11 @@ match({ history: browserHistory, routes } as any, (error, redirectLocation, rend
     </Provider>,
     document.getElementById('root')
   );
+
+  // Render dev tools
+  render(
+    <DevTools store={store} />,
+    document.getElementById('dev-tools')
+  )
+
 });
-
-
-// Render dev tools
-// render(
-//   <DevTools store={store} />,
-//   document.getElementById('dev-tools')
-// )
