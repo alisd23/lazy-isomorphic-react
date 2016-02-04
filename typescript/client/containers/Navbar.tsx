@@ -27,7 +27,7 @@ class Navbar extends React.Component<INavbarProps, {}> {
     return (
       <nav className="navbar navbar-light bg-faded container-fluid">
         <a className="navbar-brand" onClick={() => this.props.push('/')}>
-          <i className="material-icons md-24" style={{verticalAlign: 'middle'}}>shopping_cart</i>
+          <i className="material-icons md-24 text-success">shopping_cart</i>
         </a>
         <ul className="nav navbar-nav">
         {

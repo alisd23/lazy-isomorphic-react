@@ -9,6 +9,7 @@ interface IProductProps {
   id: number;
   price: number;
   quantity?: number;
+  image: string;
   title: string;
   push?: (String) => any;
 }
@@ -20,13 +21,17 @@ class Product extends React.Component<IProductProps, {}> {
     require('../../../sass/common.scss');
 
     return (
-      <div>
-        <a onClick={() => this.props.push(`/product/${this.props.id}`)}>
-          <strong>{this.props.title}</strong>
-        </a>
-        <span> - </span>
-        <span>£{this.props.price} </span>
-        <span>{this.props.quantity ? `x ${this.props.quantity}` : null}</span>
+      <div className="flex">
+        <div className="frame flex-static m-r-3">
+          <img src={`/assets/images/${this.props.image}`} />
+        </div>
+        <div className="flex-expand">
+          <a onClick={() => this.props.push(`/product/${this.props.id}`)}>
+            <strong>{this.props.title}</strong>
+          </a>
+          <p>£{this.props.price} </p>
+          <span>{this.props.quantity ? `x ${this.props.quantity}` : null}</span>
+        </div>
       </div>
     )
   }

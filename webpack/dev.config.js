@@ -7,6 +7,9 @@ const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
+const projectRootPath = path.resolve(__dirname, '../');
+const assetsPath = path.resolve(projectRootPath, './build');
+
 module.exports = {
 	cache: true,
   devtool: 'inline-source-map',
@@ -15,14 +18,13 @@ module.exports = {
 	entry: [
     'webpack-dev-server/client?http://localhost:9000', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
-		path.resolve(__dirname, 'javascript') + '/client/app.js'
+		'./javascript/client/app.js'
 	],
 	output: {
-		path: path.join(__dirname, 'build/'),
+		path: path.join(__dirname, '..', 'build/'),
     publicPath: 'http://localhost:9000/',
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
-		// filename: 'bundle.js'
 	},
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

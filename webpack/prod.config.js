@@ -12,23 +12,24 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('.
 const projectRootPath = path.resolve(__dirname, '../');
 const assetsPath = path.resolve(projectRootPath, './build');
 
+const extractSASS = new ExtractTextPlugin('[name].css', {
+	allChunks: true
+});
+
 module.exports = {
 	cache: true,
-  devtool: 'source-map',
+  devtool: false,
 	verbose: true,
 	colors: true,
 	'display-error-details': true,
 	context: path.resolve(__dirname, '..'),
   progress: true,
-	entry: [
-		'./javascript/client/app.js'
-	],
+	entry: ['./javascript/client/app.js'],
 	output: {
 		path: assetsPath,
     publicPath: '/',
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js'
-		// filename: 'bundle.js'
 	},
   plugins: [
 		new CleanPlugin(
@@ -37,7 +38,8 @@ module.exports = {
 		),
 
 		// css files from the extract-text-plugin loader
-    new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
+    // new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: false}),
+    extractSASS,
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
@@ -54,21 +56,18 @@ module.exports = {
 		// optimizations
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'commons',
+			filename: 'commons.js'
+		}),
 		webpackIsomorphicToolsPlugin
   ],
-	resolve: {
-    modulesDirectories: [
-      'src',
-      'node_modules'
-    ],
-    extensions: ['', '.json', '.js', '.jsx']
-  },
 	progress: true,
 	module: {
 		loaders: [
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', ['css', 'resolve-url', 'sass']),
+        loader: extractSASS.extract('style', ['css', 'resolve-url', 'sass']),
 				// include: path.join(__dirname, 'sass')
       },
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -81,14 +80,14 @@ module.exports = {
 
 	// LOADER config
 	cssLoader: {
-		modules: true,			// Enables local scoped css (hash-like class names specific to components)
+		// modules: true,			// Enables local scoped css (hash-like class names specific to components)
 		importLoaders: 1,		// Which loaders should be applied to @imported resources (How many after css loader)
-		sourceMap: true
+		// sourceMap: true
 	},
 	sassLoader: {
-		sourceMap: true,
-		outputStyle: 'expanded',
-		sourceMapContents: true
+		// sourceMap: true,
+		// outputStyle: 'expanded',
+		// sourceMapContents: true
 	},
 	postcss: [
     autoprefixer({

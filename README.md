@@ -1,26 +1,28 @@
-# Isomorphic React with lazy loading
+# A Lazy Isomorphic React Router Experiment
 
 If you've used React and Flux, you'll know how powerful this combination is when
 building single page applications. But how practical is it when building truly
-large scale applications with multiple sections?
+large scale applications with multiple sections? Issues with client-rendered single
+page applications include **long initial loading times** and **problems with search
+engine optimisation**, both of which I will discuss in more detail later.
 
 I thought it would be interesting to attempt to build a single page application
-which behaves like a multi-page application, in a way that would make scaling it
-a breeze. I wanted to avoid the 'load everything at launch' approach of many single
-page applications and integrate **lazy loading** into the app, which allows the client
-to load the components, styles for those components, and relevant Redux reducers
-(or stores in flux) on demand, as the user traverses around the site, massively
-reducing the initial load time of the application.
+which behaves like a multi-page application, in a way that would
+make scaling it a breeze. I wanted to avoid the 'load everything at launch' approach
+of many single page applications and integrate **lazy loading** into the app,
+which allows the client to load the components, styles for those components, and
+relevant Redux reducers (or stores in flux) on demand, as the user traverses around
+the site, massively reducing the initial load time of the application.
 
 
 ## Technologies to include
 
-I wanted to see how well the isomorphic react method plays with other technologies,
+I wanted to see how well an isomorphic React framework plays with other technologies,
 meaning how easy it is to incorporate other technologies into the application. I
 think this is an important gauge of how well this framework would work in practice.
 So just for reference, here is the list of these technologies/techniques I used.
 
-##### Typescript
+##### TypeScript
 Useful in large applications as the strongly typed nature of it allows you to catch
 bugs earlier in the development cycle, making it harder to break things when making
 a change.
@@ -44,16 +46,18 @@ not familiar with the concept, maybe you'll warm to it (my joke).
 
 ##### Sass
 And finally, Sass for stylesheets. People have been talking recently about getting
-rid of the stylesheets in React applications, in favour of writing styles in
-javascript then inserting them directly into the react component.
+rid of stylesheets in React applications altogether, in favour of writing styles in
+JavaScript then inserting them directly into the react component, with something like
+[JSS Styles](https://github.com/jsstyles/jss).
 Maybe that's for another blog post, so for now, Sass.
 
 
 ## The application
 
-I decided to take the basic redux shopping cart application as a start point, and adapt
-it. This example is simple at the moment, but it has 2 pages which is enough to showcase
-isomorphic React and code-splitting.  
+I decided to take the basic Redux shopping cart application as a start point, and adapt
+it. The application is simple at the moment, but this was more about experimenting
+with technologies than the end product itself. It has 2 pages which is enough to showcase
+isomorphic React and code-splitting.
 
 The main layout of the website at the moment is as follows:
 
@@ -63,6 +67,9 @@ This page sits at the base root - '/'.
 given by the id in the url. This route has the path '/product/:id', where id is
 the product id
 
+
+-- SCREENSHOT OF HOME PAGE AND LINK --
+-- Maybe add more functionality --
 
 
 ## Why isomorphic?
@@ -78,26 +85,63 @@ So why would you develop an isomorphic application?
 ##### Code reuse  
 
 A big benefit is to able to reduce the amount of overall code in your application.
-In a traditional multi-page web application you would use a *templating
+In a server-rendered application you would use a *templating
 engine* (such as Jade, Blade etc...) to render your markup on the server, and if
 you wanted to update on the client afterwards you would need some client-side
-javascript logic to do this.
+JavaScript logic to do this.
 With an isomorphic React application you can replace the traditional templating
 engine with React, allowing you to the use the React components on both the
 client and the server.
 
+This code reuse could extend even further if you decided to build accompanying mobile apps
+with **React native**, because this opens the door for you to share components
+across web and mobile applications. Whether this is a good thing is still
+up for debate. Is it a good idea to have multiple applications use the same React
+component? What if you change a component to address something in the web application,
+might that break something in your iOS app? Maybe something to consider.
+
+##### Performance
+
+The fact that the server can also render content in **exactly** the same way that
+the client does means that the initial load time of an isomorphic application
+would be much smaller than a solely client-rendered application, it would be similar
+to the load time of a server-rendered application for 2 reasons:
+
+###### **No initial render**
+The client does not have to do the initial render, so this cuts down the amount of
+processing the client needs to do when the app loads for **the first time**.
+
+###### **Smaller initial file size**
+Thanks to code-splitting the initial file size could also be much smaller,
+as we only need to load the code for the current page, in the same way you might
+split your code up for a server-rendered multi-page application.
+
+
+##### Search engine optimisation  
+
+A problem with client-rendered applications currently is that the markup received
+from the server is pretty much blank, until the client loads and is then able to
+render the content. This is an issue for web crawlers such as Google's, as all it
+can go off initially is your blank page, which won't do wonders for your search engine
+presence.  
+
+Isomorphic applications solve this problem. By always rendering the page once
+on the server side before sending it to the client, web crawlers can once again
+access your real content, just as they would in a server-rendered application.
+
+
+## Let's see some Isomorphic Rendering
+
 Rendering the application on the server:  
 **server/app.tsx**
 
-```javascript
+```JavaScript
 
 match({ routes, location: req.url || '/' }, (error, redirectLocation, renderProps) => {
   // Compile an initial state
   const products = {};
   _products.forEach((p) => products[p.id] = p);
-  const initialState = {
-    products: products
-  }
+  const initialState = { products }
   const store = configureServer(reducerRegistry, initialState);
   const component = (
     <Provider store={store}>
@@ -124,7 +168,7 @@ res
 Rendering the application on the client:  
 **client/app.tsx**
 
-```javascript
+```JavaScript
 match({ history: browserHistory, routes } as any, (error, redirectLocation, renderProps) => {
 
   const initialState = (window as any).__INITIAL_STATE__;
@@ -145,58 +189,20 @@ The code above is simplified slightly but as you can see both the client are ren
 the exact component, so after this point React takes over and the rendering will be exactly
 the same on both.
 
-The server has to do a bit more work. It has to embed the assets (javascript, styles)
+The server has to do a bit more work. It has to embed the assets (JavaScript, styles)
 into the initial html and also assign the initial state onto the window object
 so the client can pick it up and initialise its own store.
-
-
-This code reuse could extend even further if you decided to build mobile apps
-with **React native**, because this opens the door for you to share components
-across different applications all together. Whether this is a good thing is still
-up for debate. Is it a good idea to have multiple applications use the same React
-component? What if you change a component to address something in the web application,
-might that break something in your iOS app? Maybe something to consider.
-
-##### Consistent data API across all applications  
-
-Another great thing with an isomorphic approach is it allows you to be consistent
-across all applications you may have (web and mobile). In a traditional web application
-you might have post requests which require the server to render a whole new page
-with the templating engine and then return it to the client.
-
-With an isomorphic approach, you can allow all your web application to speak the
-same language as your mobile apps, that of the data API. Once the web
-application has loaded, all it needs to do is request raw data from the API,
-then thanks to React all we have to do is force a re-render by updating the state
-of the data store (or Redux reducers in my case).
-Of course in an application with multiple pages we will still need to retrieve
-new components and reducers as we traverse the site, but this can be done in
-quite an elegant way, which I will cover later. Also once you have downloaded
-the component for a page once, it's there, so you won't need to request anything
-from the server again if you go back to that same page.
-
-##### Search engine optimisation  
-
-A problem with single page applications currently is that the markup received
-from the server is pretty much blank, until the client loads and is then able to
-render the content. This is an issue for web crawlers such as Google's, as all it
-can go off initially is your blank page, which won't do wonders for your search engine
-presence.  
-
-Isomorphic applications solve this problem. By always rendering the page once
-on the server side before sending it to the client, web crawlers can once again
-access your real content, just as they would in a traditional multi-page application.
 
 
 ## Webpack
 
 Webpack is an intelligent module bundler which resolves dependencies in your files
 and generates the static assets to be delivered to the client. The really great thing
-about webpack is that these dependencies don't have to just be standard javascript
+about webpack is that these dependencies don't have to just be standard JavaScript
 imports or requires. By using specialist **loaders**, you can use webpack to bundle up
-your sass into separate modules. You could even use webpack to replace the link of
-`img` elements with base64 strings, hard-coding the image directly inside the react
-component.
+your Sass into separate modules depending on different entry points in to you application.
+You could even use webpack to replace the link of `img` elements with base64 strings,
+hard-coding the image directly inside the react component.
 
 
 #### Sass compilation  
@@ -206,7 +212,11 @@ Here is an example of using webpack to configure sass compilation, with live rel
 Webpack config is usually written in a `webpack.config.js` file, so here I tell webpack
 which loaders to apply to the scss files:
 
-```javascript
+**NOTE** *This is the webpack configuration for the development environment only.
+You'll need a separate set of configuration to set the application up for production
+You can check out my production webpack config* [here](https://github.com/alisd23/lazy-isomorphic-react/blob/master/webpack/prod.config.js).
+
+```JavaScript
 var config = {
   ...
   module: {
@@ -238,12 +248,12 @@ var config = {
 }
 ```
 
-Then simply **require**-ing the sass file in your client side javascript is enough for
+Then simply **require**-ing the sass file in your client side JavaScript is enough for
 webpack to realise those styles need loading, so it will then bundle those for you.
 
 So in my App.tsx top Level component I require the **common** styles stylesheet
 
-```javascript
+```JavaScript
 class App extends React.Component<IAppProps, {}> {
 
   render() : React.ReactElement<{}> {
@@ -283,29 +293,33 @@ material online can only improve from here.
 
 ## Lazy-loading and Code splitting
 
-With our isomorphic application having mulitple pages, there's no need for us to
+With our isomorphic application having multiple pages, there's no need for us to
 load all the assets for the **whole site** on the initial load. We should only
-load the resources needed for the current 'Page' we are on.
+load the resources needed for the current 'page' we are on.
 
 The assets we are interested in lazy loading are:
 - **React components**  - To generate the markup for new pages
 - **Stylesheets**       - To style the new components
 - **Redux reducers**    - To add functionality to the react components if necessary.
-In my application these reducer files also include any relevant action handlers
-and action constants that apply to that specific reducer. This is called a **duck**
-module, which can read more about [here](https://github.com/erikras/ducks-modular-redux).
+I'm using [Redux ducks](https://github.com/erikras/ducks-modular-redux) to separate
+concerns.
 
 Now ideally what we want is to group related assets together into what webpack calls
 **chunks**, which is just a chunk of code to be sent to the client. **Code-splitting**
 is the process of creating split points in the code which webpack can then parse
 and create modularized output files from. You can tell webpack that there should be
-a new chunk generated by adding a `require.ensure([], callback)` call into your code,
+a new chunk generated by adding a `require.ensure([], callback)` call into your code
+(see the ['time to be lazy' section](#time-to-be-lazy)),
 and then `require` modules inside the callback (including sass files if you have the
 right webpack loader, mentioned above).
 
-There are many plugins and loaders to help with efficiency and different optimization
-strategies, which is out of the scope of this post, but I will show the basics of code
-splitting later in this section.
+There are many plugins and loaders to help with efficiency and different optimisation
+strategies, some of which are really cool.
+For example you can easily specify a minimum chunk file size, meaning that any files
+smaller than the threshold will get merged together, and webpack will sort out all
+dependencies for you.
+
+You can find the list of webpack plugins [here](https://webpack.github.io/docs/list-of-plugins.html)
 
 
 ##### React router
@@ -316,7 +330,7 @@ pages in an application, and how it relates to the isomorphic React approach.
 We can define routes using a React Router component like the following:
 
 
-```javascript
+```JavaScript
 
 import App from './containers/App';
 
@@ -346,7 +360,7 @@ In this function we can require all the modules we need before the React router
 switches to the new component, which is exactly what we want. So we end up with a
 routes file like this:
 
-```javascript
+```JavaScript
 
 import App from './containers/App';
 
@@ -393,33 +407,38 @@ This issue stumped me for a while. As node's require system doesn't allow you to
 require `css` or `sass` files, the server render crashes.
 
 However there is an answer. A helpful (but not particularly easy to implement in
-my opinion) library called **webpackIsomorphicTools** solves this problem.
-It collects all the assets in your components that you want to render, then allows
-you to render them into the HTML before sending to the client.
+my opinion) library called [Webpack Isomorphic Tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools)
+solves this problem. It collects all the assets in your components that you want
+to render, then allows you to render them into the HTML before sending to the client.
 
 This solution isn't very elegant or easy to find, but I think someone will come up
 with an even better solution in the future as isomorphic applications grow in popularity.
+
+With the time constraints, I didn't quite manage to get code-splitting working for
+the stylesheets, only for the JavaScript files. I think a possible solution is
+to explicitly define **entry points** in to the application (basically just each
+individual page the user can start from), then insert the relevant stylesheet links
+into the initial html being rendered on the server. Then after that webpack should
+be able to handle requesting new style chunks as you move around the site.
+Hopefully in the future I'll be able to add that in, as well as some other improvements.
 
 
 ## Conclusion
 
 I really think that isomorphic applications are the future for multi-page applications,
 and when combining React, Redux (or something similar), and the likes of webpack
-with hot-reloading, you have a brilliant javascript framework with a clear,
-structured developer workflow to play with.
+with hot-reloading, you have a brilliant JavaScript framework with a clear,
+structured developer workflow.
 
 However, this is one of the most difficult things I have attempted to build so far.
 There is a lot of ground work to do before getting to a point where you have this
 efficient workflow. But when you get there, it's worth it.
 
-In terms of lazy-loading, I think the benefits are clear, and it makes building large
-single page applications with multiple screens perfectly viable.
-
 From what I've seen so far, a lot of this stuff is still quite 'cutting edge', so don't
-expect a million stack overflow questions and tons of examples online. You might have
+expect a million Stack Overflow questions and tons of examples online. You might have
 to go digging through some code... This also means it is very likely to change in the
 future, so take that under consideration before starting a production application
 in this way.
 
 If you want to have a look at the code I'll leave a link to the github repository
-(here)[]
+[here]()

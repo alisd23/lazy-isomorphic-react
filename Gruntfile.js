@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 	var webpackConfig = require("./webpack/prod.config.js");
 
   grunt.initConfig({
-    clean: ['build'],
+    clean: ['build', 'javascript'],
     webpack: {
 			main: webpackConfig
 		},
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           { expand: true, src: ['assets/**/*'], dest: 'build/' },
           { expand: true, src: ['icons/**/*'], dest: 'build/' },
           { expand: true, src: ['lib/**/*'], dest: 'build/' },
-          { expand: true, src: ['src/**/*.json'], dest: 'build/' },
+          { expand: true, cwd: 'typescript', src: ['**/*.json'], dest: 'javascript/' },
           { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf'], dest: 'assets/fonts/' },
           { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff'], dest: 'assets/fonts/' },
           { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff2'], dest: 'assets/fonts/' }
@@ -75,11 +75,11 @@ module.exports = function(grunt) {
         livereload: true
       },
       assets: {
-        files: ['index.html', 'assets/**/*'],
+        files: ['index.html', 'assets/**/*', 'typescript/**/*.json'],
         tasks: ['copy', 'restart-server']
       },
       express: {
-        files: ['server.js', '/javascript/server/**/*.js'],
+        files: ['server.js', 'javascript/server/**/*.js'],
         tasks: ['restart-server']
       }
     },
@@ -90,6 +90,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build',           ['pre-compile', 'copy', 'webpack']);
   grunt.registerTask('serve:dev',       ['pre-compile', 'copy', 'express:dev', 'watch']);
-  grunt.registerTask('serve:prod',      ['express:prod', 'keepalive']);
+  grunt.registerTask('serve:prod',      ['build', 'express:prod', 'keepalive']);
   grunt.registerTask("default",         ['serve:dev']);
 };

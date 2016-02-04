@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "iPad 4 Mini",
+    "price": 500.01,
+    "quantity": 2,
+    "image": "ipad-mini-4.jpg"
+  },
+  {
+    "id": 2,
+    "title": "H&M T-Shirt White",
+    "price": 10.99,
+    "quantity": 1,
+    "image": "white-tshirt.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Charli XCX - Sucker CD",
+    "price": 19.99,
+    "quantity": 5,
+    "image": "charlixcx-sucker-cd.jpg"
+  }
+]

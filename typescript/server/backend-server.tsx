@@ -58,9 +58,7 @@ export default (PORT) => {
         const products = {};
         _products.forEach((p) => products[p.id] = p);
 
-        const initialState = {
-          products: products
-        }
+        const initialState = { products }
         const store = configureServer(reducerRegistry, initialState);
 
         const component = (

@@ -38,7 +38,7 @@ export default function configureRoutes(reducerRegistry) {
       }} />
       <Route path="/product/:id" getComponent={(location, cb) => {
         require.ensure([], require => {
-          reducerRegistry.register({ ['productPage']: require('./reducers/productPage').default });
+          reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
           cb(null, require('./containers/Product').default);
         });
       }} />

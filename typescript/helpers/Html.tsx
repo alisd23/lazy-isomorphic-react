@@ -58,6 +58,7 @@ export default class Html extends React.Component<HTMLProps, {}> {
           <div id="root" dangerouslySetInnerHTML={{__html: content}}/>
           <div id="dev-tools"></div>
           <script dangerouslySetInnerHTML={{__html:  `window.__INITIAL_STATE__=${JSON.stringify(store.getState())};`}} charSet="UTF-8"/>
+          <script src={assets.javascript.commons} charSet="UTF-8"/>
           <script src={assets.javascript.main} charSet="UTF-8"/>
         </body>
       </html>

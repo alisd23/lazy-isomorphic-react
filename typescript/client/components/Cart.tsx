@@ -22,6 +22,7 @@ class Cart extends React.Component<ICartProps, {}> {
             title={product.title}
             price={product.price}
             quantity={product.quantity}
+            image={product.image}
             id={product.id}
             key={product.id} />
         );

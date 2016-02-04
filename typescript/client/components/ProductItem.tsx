@@ -21,6 +21,7 @@ class ProductItem extends React.Component<IProductItemProps, {}> {
           <Product
             title={product.title}
             price={product.price}
+            image={product.image}
             id={product.id} />
         </div>
         <div className="flex-static">
