@@ -18,23 +18,31 @@ class Cart extends React.Component<ICartProps, {}> {
     const nodes = !hasProducts
       ? <em>Please add some products to cart.</em>
       : this.props.products.map(product =>
-          <Product
-            title={product.title}
-            price={product.price}
-            quantity={product.quantity}
-            image={product.image}
-            id={product.id}
-            key={product.id} />
+          <div key={product.id} className="m-b-2">
+            <Product
+              title={product.title}
+              price={product.price}
+              quantity={product.quantity}
+              image={product.image}
+              id={product.id} />
+          </div>
         );
 
     return (
-      <div className="p-a-2">
-        <h3 className="m-b-2">Your Cart</h3>
-        <div>{nodes}</div>
-        <p className="m-b-2">Total: £{this.props.total}</p>
-        <button className="btn btn-success-outline" onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
-          Checkout
-        </button>
+      <div className="p-x-2 p-y-3">
+        <h5 className="m-b-3 small-caps">Your Cart</h5>
+        <div className="flex row-xs-bottom flex-wrap">
+          <div className="cart-list flex-expand m-b-2 m-r-2">{nodes}</div>
+          <div className="checkout flex-static bg-faded p-a-3 m-b-2">
+            <h3 className="m-b-3">
+              <span className="small-caps small">Total - </span>
+              <span><strong>£{this.props.total}</strong></span>
+            </h3>
+            <button className="btn btn-block btn-lg btn-success" onClick={this.props.onCheckoutClicked} disabled={!hasProducts}>
+              <span className="small-caps small"><strong>Checkout</strong></span>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

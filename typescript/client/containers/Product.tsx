@@ -52,14 +52,21 @@ class ProductContainer extends React.Component<IProductContainerProps, IProductC
         {
           this.state.product &&
             <div className="p-y-3">
-              <h2>
-                {this.state.product.title}
-                <span className="p-l-1">
-                  { Rating }
-                </span>
-              </h2>
-              <h3><strong>£{this.state.product.price}</strong></h3>
-              <button className="btn btn-primary m-t-3" onClick={() => this.addToCart()}>
+              <div className="flex">
+                <div className="frame flex-static m-r-3">
+                  <img src={`/assets/images/${this.state.product.image}`} />
+                </div>
+                <div>
+                  <h2 className="m-b-1">
+                    {this.state.product.title}
+                    <span className="p-l-1">
+                      { Rating }
+                    </span>
+                  </h2>
+                  <h3><strong>£{this.state.product.price}</strong></h3>
+                </div>
+              </div>
+              <button className="btn btn-lg btn-primary-outline add-to-cart m-t-3" onClick={() => this.addToCart()}>
                 Add to Cart
               </button>
             </div>

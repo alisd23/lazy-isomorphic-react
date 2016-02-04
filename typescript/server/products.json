@@ -2,6 +2,7 @@
   {
     "id": 1,
     "title": "iPad 4 Mini",
+    "description": "Great product for anyone who wants an iPad 4 mini",
     "price": 500.01,
     "quantity": 2,
     "image": "ipad-mini-4.jpg"
@@ -9,6 +10,7 @@
   {
     "id": 2,
     "title": "H&M T-Shirt White",
+    "description": "Great product for anyone who wants a white t-shirt",
     "price": 10.99,
     "quantity": 1,
     "image": "white-tshirt.jpg"
@@ -16,6 +18,7 @@
   {
     "id": 3,
     "title": "Charli XCX - Sucker CD",
+    "description": "Great product for anyone who wants a terrible CD",
     "price": 19.99,
     "quantity": 5,
     "image": "charlixcx-sucker-cd.jpg"

@@ -37,8 +37,6 @@ match({ history: browserHistory, routes } as any, (error, redirectLocation, rend
   const initialState = (window as any).__INITIAL_STATE__;
   const store = configureClient(reducerRegistry, DevTools, initialState);
 
-  console.log(renderProps);
-
   render(
     <Provider store={store}>
       <div>

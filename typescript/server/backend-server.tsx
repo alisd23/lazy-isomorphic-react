@@ -58,7 +58,10 @@ export default (PORT) => {
         const products = {};
         _products.forEach((p) => products[p.id] = p);
 
-        const initialState = { products }
+        const initialState = {
+          products,
+          routing: { location: renderProps.location }
+        }
         const store = configureServer(reducerRegistry, initialState);
 
         const component = (

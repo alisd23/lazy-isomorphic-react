@@ -11,6 +11,7 @@ interface IProductProps {
   quantity?: number;
   image: string;
   title: string;
+  description?: string;
   push?: (String) => any;
 }
 
@@ -26,11 +27,21 @@ class Product extends React.Component<IProductProps, {}> {
           <img src={`/assets/images/${this.props.image}`} />
         </div>
         <div className="flex-expand">
-          <a onClick={() => this.props.push(`/product/${this.props.id}`)}>
-            <strong>{this.props.title}</strong>
-          </a>
-          <p>£{this.props.price} </p>
-          <span>{this.props.quantity ? `x ${this.props.quantity}` : null}</span>
+          <h5 className="m-b-1">
+            <a onClick={() => this.props.push(`/product/${this.props.id}`)}>
+              <strong>{this.props.title}</strong>
+            </a>
+          </h5>
+          <h4>
+            <span>£{this.props.price}</span>
+            <span className="small"> {this.props.quantity ? `x ${this.props.quantity}` : null}</span>
+          </h4>
+          {
+            this.props.description &&
+              <p className="text-muted">
+                {this.props.description}
+              </p>
+          }
         </div>
       </div>
     )

@@ -10,12 +10,11 @@ class Main extends React.Component<{}, {}> {
   render() : React.ReactElement<{}> {
     // Import styles
     require('../../../sass/common.scss');
+    require('../../../sass/shopPage.scss');
 
     return (
-      <div>
-        <h2 className="text-xs-center m-y-3">
-          Shopping Cart Example
-        </h2>
+      <div className="p-b-3">
+        <h2 className="text-xs-center p-y-3 small-caps"><strong>SHOP</strong></h2>
         <hr/>
         <ProductList />
         <hr/>

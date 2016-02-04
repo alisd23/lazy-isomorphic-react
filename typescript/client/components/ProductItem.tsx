@@ -16,21 +16,26 @@ class ProductItem extends React.Component<IProductItemProps, {}> {
     const { product } = this.props;
 
     return (
-      <div className="m-b-2 flex">
+      <div className="m-b-3 flex row-center">
         <div className="flex-expand">
           <Product
             title={product.title}
+            description={product.description}
             price={product.price}
             image={product.image}
             id={product.id} />
         </div>
         <div className="flex-static">
-          <button
+          <div
             onClick={this.props.onAddToCartClicked}
-            className="btn btn-sm btn-primary-outline"
+            className="add-button"
             disabled={!product.quantity}>
-            {product.quantity > 0 ? 'Add to cart' : 'Sold Out'}
-          </button>
+            {
+              product.quantity > 0
+              ? <i className="material-icons md-24">add_shopping_cart</i>
+              : <span className="small">Sold out</span>
+            }
+          </div>
         </div>
       </div>
     );

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 interface IProductsListProps {
-  title: string;
   children?: React.ReactElement<any>[];
 }
 
@@ -11,8 +10,8 @@ class ProductsList extends React.Component<IProductsListProps, {}> {
     require('../../../sass/common.scss');
 
     return (
-      <div className="p-a-2">
-        <h3 className="m-b-2">{this.props.title}</h3>
+      <div className="p-x-2 p-y-3">
+        <h5 className="m-b-3 small-caps">Products</h5>
         <div>{this.props.children}</div>
       </div>
     );
