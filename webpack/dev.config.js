@@ -21,8 +21,8 @@ module.exports = {
 		'./javascript/client/app.js'
 	],
 	output: {
-		path: path.join(__dirname, '..', 'build/'),
-    publicPath: 'http://localhost:9000/',
+		path: path.join(projectRootPath, 'build/'),
+    publicPath: '/',
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
 	},
@@ -47,12 +47,12 @@ module.exports = {
       {
 				test: /\.jsx?$/,
 				loaders: ['react-hot', 'jsx-loader?harmony'],
-				include: path.join(__dirname, 'javascript')
+				include: path.join(projectRootPath, 'javascript')
 			},
       {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass'],
-				// include: path.join(__dirname, 'sass')
+				// include: path.join(projectRootPath, 'sass')
       },
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
