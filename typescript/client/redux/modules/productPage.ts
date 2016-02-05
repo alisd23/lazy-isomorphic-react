@@ -13,6 +13,10 @@ const initialState: IProductPageState = {
   maxRating: 5
 };
 
+//----------------------------//
+//           Handler          //
+//----------------------------//
+
 export default function handle(state: IProductPageState = initialState, action) : IProductPageState {
   switch (action.type) {
     case CHANGE_RATING:
@@ -28,12 +32,26 @@ export default function handle(state: IProductPageState = initialState, action) 
 }
 
 
-// Actions
+//----------------------------//
+//           Actions          //
+//----------------------------//
+
 export function changeRating(rating: number) {
   return (dispatch) => {
-    dispatch({
+    const changeRatingAction: IChangeRatingAction = {
       type: CHANGE_RATING,
       rating: rating
-    });
+    }
+    dispatch(changeRatingAction);
   };
+}
+
+
+//----------------------------//
+//      Action interfaces     //
+//----------------------------//
+
+export interface IChangeRatingAction {
+  type: string;
+  rating: number;
 }

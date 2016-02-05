@@ -4,12 +4,14 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { ILocation } from 'history';
 import { routeActions } from 'react-router-redux';
+import { IUserState } from '../redux/modules/user';
 
 // Import styles
 
 interface INavbarProps {
   push?: (String) => any;
   routing?: any;
+  user?: IUserState;
 }
 
 const links = [
@@ -27,11 +29,11 @@ class Navbar extends React.Component<INavbarProps, {}> {
     return (
       <div className="bg-faded p-y-1">
         <div className="container">
-          <nav className="navbar navbar-light container-fluid">
-            <a className="navbar-brand m-r-2" onClick={() => this.props.push('/')}>
+          <nav className="navbar navbar-light container-fluid flex row-center">
+            <a className="navbar-brand m-r-2 flex-static" onClick={() => this.props.push('/')}>
               <i className="material-icons md-24 text-success">shopping_cart</i>
             </a>
-            <ul className="nav navbar-nav">
+            <ul className="nav navbar-nav flex-expand">
             {
               links.map((link) => {
                 const classes = classNames(
@@ -49,6 +51,10 @@ class Navbar extends React.Component<INavbarProps, {}> {
               })
             }
             </ul>
+            <div className="flex-static">
+              <span className="small-caps small">Balance: </span>
+              <span><strong> £{this.props.user.balance}</strong></span>
+            </div>
           </nav>
         </div>
       </div>
@@ -58,7 +64,8 @@ class Navbar extends React.Component<INavbarProps, {}> {
 
 function mapStateToProps(state) {
   return {
-    routing: state.routing
+    routing: state.routing,
+    user: state.user
   }
 }
 

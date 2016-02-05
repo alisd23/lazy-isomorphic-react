@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { checkout } from '../redux/modules/cart'
+import { routeActions } from 'react-router-redux';
 import { getTotal, getProducts } from '../redux/modules/cart'
 import CartComponent from '../components/Cart'
 import Product from '../components/Product';
@@ -9,7 +10,7 @@ import IProduct from '../interfaces/Product';
 interface ICartProps {
   products?: IProduct[];
   total?: number;
-  checkout?: React.EventHandler<any>;
+  push?: (String) => any;
 }
 
 class Cart extends React.Component<ICartProps, {}> {
@@ -19,7 +20,7 @@ class Cart extends React.Component<ICartProps, {}> {
       <CartComponent
         products={this.props.products}
         total={this.props.total}
-        onCheckoutClicked={(e) => this.props.checkout(e)} />
+        onCheckoutClicked={(e) => this.props.push('/checkout')} />
     )
   }
 }
@@ -33,5 +34,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { checkout }
+  routeActions as any
 )(Cart)

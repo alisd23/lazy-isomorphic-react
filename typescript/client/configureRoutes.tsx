@@ -2,8 +2,8 @@ import * as React from 'react';
 import {IndexRoute, Route} from 'react-router';
 
 import App from './containers/App';
-import Main from './containers/Main';
-import Product from './containers/Product';
+import Main from './containers/ShopPage';
+import Product from './containers/ProductPage';
 import ReducerRegistry from './redux/ReducerRegistry';
 
 // Require ensure shim
@@ -33,13 +33,18 @@ export default function configureRoutes(reducerRegistry) {
     <Route path="/" component={App}>
       <IndexRoute getComponent={(location, cb) => {
         require.ensure([], require => {
-          cb(null, require('./containers/Main').default);
+          cb(null, require('./containers/ShopPage').default);
         });
       }} />
       <Route path="/product/:id" getComponent={(location, cb) => {
         require.ensure([], require => {
           reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
-          cb(null, require('./containers/Product').default);
+          cb(null, require('./containers/ProductPage').default);
+        });
+      }} />
+      <Route path="/checkout" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./containers/CheckoutPage').default);
         });
       }} />
     </Route>

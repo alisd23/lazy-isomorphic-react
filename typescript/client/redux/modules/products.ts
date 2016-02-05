@@ -2,7 +2,7 @@ import IProduct from '../../interfaces/Product';
 import shop from '../../api/shop';
 
 // Constants
-import { ADD_TO_CART } from './shared';
+import { ADD_TO_CART, IAddToCartAction } from './cart';
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
 export interface IProductsState {
@@ -10,18 +10,25 @@ export interface IProductsState {
 }
 const initialState: IProductsState = {};
 
+
+//----------------------------//
+//           Handler          //
+//----------------------------//
+
 export default function handle(state: IProductsState = initialState, action) : IProductsState {
   switch (action.type) {
     case RECEIVE_PRODUCTS:
       const newProductsMap = {};
-      action.products.forEach((product) => newProductsMap[product.id] = product);
+      (action as IReceiveProductsAction).products.forEach((product) => {
+        newProductsMap[product.id] = product;
+      });
       return Object.assign(
         {},
         state,
         newProductsMap
       );
     case ADD_TO_CART:
-      const productId: number = action.productId;
+      const productId: number = (action as IAddToCartAction).productId;
       if (productId) {
         const product: IProduct = state[productId];
         const newProduct = Object.assign(
@@ -40,23 +47,42 @@ export default function handle(state: IProductsState = initialState, action) : I
   }
 }
 
-// Helpers
-export function getProduct(products: IProductsState, id) : IProduct {
+
+//----------------------------//
+//           Actions          //
+//----------------------------//
+
+export function getAllProducts() {
+ return (dispatch) => {
+   shop.getProducts((products: IProduct[]) => {
+     const receiveProductsAction: IReceiveProductsAction = {
+       type: RECEIVE_PRODUCTS,
+       products: products
+     }
+     dispatch(receiveProductsAction);
+   });
+ };
+}
+
+
+//----------------------------//
+//      Action interfaces     //
+//----------------------------//
+
+export interface IReceiveProductsAction {
+  type: string;
+  products: IProduct[];
+}
+
+
+//----------------------------//
+//           Helpers          //
+//----------------------------//
+
+export function getProduct(products: IProductsState, id: string | number) : IProduct {
   return products[id];
 }
 
 export function getVisibleProducts(products: IProductsState = []) : IProduct[] {
   return Object.keys(products).map((id) => products[id]);
-}
-
-// Actions
-export function getAllProducts() {
- return (dispatch) => {
-   shop.getProducts((products: IProduct[]) => {
-     dispatch({
-       type: RECEIVE_PRODUCTS,
-       products: products
-     });
-   });
- };
 }

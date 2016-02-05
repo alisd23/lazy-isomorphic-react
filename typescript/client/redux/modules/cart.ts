@@ -1,13 +1,12 @@
 
 import IProduct from '../../interfaces/Product';
 import shop from '../../api/shop';
-import { ADD_TO_CART } from './shared';
 import { IProductsState, getProduct } from './products';
 
-const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
-const CHECKOUT_SUCCESS = 'CHECKOUT_REQUEST';
-const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
-const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
+export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE';
+export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
 
 interface ICartItem {
   id: number;
@@ -18,6 +17,11 @@ export interface ICartState {
 }
 
 const initialState: ICartState = {}
+
+
+//----------------------------//
+//           Handler          //
+//----------------------------//
 
 export default function handle(state: ICartState = initialState, action) : ICartState {
   switch (action.type) {
@@ -43,22 +47,23 @@ export default function handle(state: ICartState = initialState, action) : ICart
   };
 }
 
-export function getQuantity(state: ICartState, productId: number | string) : number {
-  return state[productId].quantity || 0;
-}
 
-export function getAddedIds(state: ICartState) : string[] {
-  return Object.keys(state);
-}
+//----------------------------//
+//           Actions          //
+//----------------------------//
 
-// Actions
 export function checkout(products: IProduct[]) {
  return (dispatch, getState) => {
    const cart: ICartState = getState().cart;
+   const products: IProductsState = getState().products;
 
-   dispatch({
-     type: CHECKOUT_REQUEST
-   });
+   const checkoutRequestAction: ICheckoutAction = {
+     type: CHECKOUT_REQUEST,
+     cart,
+     total: Number(getTotal(products, cart))
+   }
+   dispatch(checkoutRequestAction);
+
    shop.buyProducts(products, () => {
      dispatch({
        type: CHECKOUT_SUCCESS,
@@ -70,7 +75,38 @@ export function checkout(products: IProduct[]) {
  }
 }
 
-export function getProducts(products: IProductsState, cart: ICartState) {
+export function addToCart(productId: number) {
+  return (dispatch, getState) => {
+    if (getState().products[productId].quantity > 0) {
+      const addToCartAction: IAddToCartAction = {
+        type: ADD_TO_CART,
+        productId: productId
+      }
+      dispatch(addToCartAction);
+    }
+  }
+}
+
+//----------------------------//
+//      Action interfaces     //
+//----------------------------//
+
+export interface ICheckoutAction {
+  type: string;
+  cart: ICartState;
+  total: number;
+}
+export interface IAddToCartAction {
+  type: string;
+  productId: number;
+}
+
+
+//----------------------------//
+//           Helpers          //
+//----------------------------//
+
+export function getProducts(products: IProductsState, cart: ICartState) : IProduct[] {
   return getAddedIds(cart).map(id => (
     Object.assign(
       {},
@@ -85,4 +121,12 @@ export function getTotal(products: IProductsState, cart: ICartState) {
     total + getProduct(products, id).price * getQuantity(cart, id),
     0
   ).toFixed(2);
+}
+
+export function getQuantity(state: ICartState, productId: number | string) : number {
+  return state[productId].quantity || 0;
+}
+
+export function getAddedIds(state: ICartState) : string[] {
+  return Object.keys(state);
 }

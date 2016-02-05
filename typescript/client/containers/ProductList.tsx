@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { addToCart } from '../redux/modules/shared';
+import { addToCart } from '../redux/modules/cart';
 import { getVisibleProducts } from '../redux/modules/products'
 import ProductItem from '../components/ProductItem'
 import ProductsList from '../components/ProductsList'

@@ -4,7 +4,7 @@ import { routeActions } from 'react-router-redux'
 import { getProduct, getVisibleProducts, IProductsState } from '../redux/modules/products'
 import IProduct from '../interfaces/Product';
 import IAppPage from '../interfaces/AppPage';
-import { addToCart } from '../redux/modules/shared';
+import { addToCart } from '../redux/modules/cart';
 import { changeRating } from '../redux/modules/productPage';
 import classnames = require('classnames');
 
@@ -23,6 +23,8 @@ interface IProductContainerState {
   product: IProduct;
 }
 
+// TODO - Separate into CONTAINER (this file - funcionality, state) and
+// PRESENTATIONAL COMPONENT (Styles, markup)
 class ProductContainer extends React.Component<IProductContainerProps, IProductContainerState> {
 
   componentWillMount() {
