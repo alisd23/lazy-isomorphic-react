@@ -16,5 +16,5 @@ Overwrite the folders. We need the react-router **master** branch (should be fix
 
 #### production
 
-`grunt build`
+`grunt build`  
 `grunt serve:prod`
