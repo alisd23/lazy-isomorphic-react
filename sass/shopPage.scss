@@ -1,29 +1,7 @@
-@import '../node_modules/bootstrap/scss/variables';
+
 @import './variables';
+@import './cart';
 
-.add-button {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $green;
-  color: white;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  padding: 0.5rem;
-
-  &:hover {
-    background-color: darken($green, 10%);
-  }
-  &[disabled] {
-    color: $gray-light;
-    background-color: $gray-lighter;
-  }
-}
 
 .checkout {
   width: 450px;

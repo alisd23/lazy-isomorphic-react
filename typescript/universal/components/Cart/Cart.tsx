@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Product from './Product';
-import IProduct from '../interfaces/Product';
+import CartProduct from '../../containers/Cart/CartProduct';
+import IProduct from '../../interfaces/Product';
 
 
 interface ICartProps {
@@ -9,22 +9,15 @@ interface ICartProps {
   onCheckoutClicked: React.EventHandler<any>;
 }
 
-class Cart extends React.Component<ICartProps, {}> {
+export default class Cart extends React.Component<ICartProps, {}> {
   render() : React.ReactElement<ICartProps> {
-    // Import styles
-    require('../../../sass/common.scss');
 
     const hasProducts = this.props.products.length > 0;
     const nodes = !hasProducts
       ? <em>Please add some products to cart.</em>
       : this.props.products.map(product =>
           <div key={product.id} className="m-b-2">
-            <Product
-              title={product.title}
-              price={product.price}
-              quantity={product.quantity}
-              image={product.image}
-              id={product.id} />
+            <CartProduct product={product} />
           </div>
         );
 
@@ -47,5 +40,3 @@ class Cart extends React.Component<ICartProps, {}> {
     );
   }
 }
-
-export default Cart;

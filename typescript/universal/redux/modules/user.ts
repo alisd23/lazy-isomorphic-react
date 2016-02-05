@@ -1,12 +1,10 @@
 
 import IProduct from '../../interfaces/Product';
-import shop from '../../api/shop';
+import shop from '../../../client/api/shop';
 import { CHECKOUT_REQUEST, CHECKOUT_FAILURE, ICheckoutAction } from './cart';
 import IUser from '../../interfaces/User';
 
-export interface IUserState extends IUser {}
-
-const initialState: IUserState = {
+const initialState: IUser = {
   id: null,
   balance: 10000,
   name: 'Guest'
@@ -17,7 +15,7 @@ const initialState: IUserState = {
 //           Handler          //
 //----------------------------//
 
-export default function handle(user: IUserState = initialState, action: any) : IUserState {
+export default function handle(user: IUser = initialState, action: any) : IUser {
   switch (action.type) {
     case CHECKOUT_REQUEST:
       return Object.assign({},
@@ -39,6 +37,6 @@ export default function handle(user: IUserState = initialState, action: any) : I
 //           Helpers          //
 //----------------------------//
 
-export function getBalance(user: IUserState) {
+export function getBalance(user: IUser) {
   return user.balance.toFixed(2);
 }

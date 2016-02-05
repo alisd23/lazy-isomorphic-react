@@ -1,4 +1,4 @@
-import IProduct from '../interfaces/Product';
+import IProduct from '../../universal/interfaces/Product';
 
 /**
  * Mocking client-server processing

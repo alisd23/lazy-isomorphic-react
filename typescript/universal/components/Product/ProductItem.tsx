@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Product from './Product';
-import IProduct from '../interfaces/Product';
+import IProduct from '../../interfaces/Product';
 
 interface IProductItemProps {
   product: IProduct;
@@ -12,7 +12,6 @@ class ProductItem extends React.Component<IProductItemProps, {}> {
 
   render() : React.ReactElement<IProductItemProps> {
     // Import styles
-    require('../../../sass/common.scss');
     const { product } = this.props;
 
     return (

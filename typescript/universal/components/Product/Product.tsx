@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux';
-import IProduct from '../interfaces/product';
 
 interface IProductProps {
   key?: any;
@@ -12,6 +10,7 @@ interface IProductProps {
   image: string;
   title: string;
   description?: string;
+  children?: React.ReactElement<any>[];
   push?: (String) => any;
 }
 
@@ -19,8 +18,6 @@ class Product extends React.Component<IProductProps, {}> {
 
   render() : React.ReactElement<IProductProps> {
     // Import styles
-    require('../../../sass/common.scss');
-
     return (
       <div className="flex">
         <div className="frame flex-static m-r-3">
@@ -42,6 +39,10 @@ class Product extends React.Component<IProductProps, {}> {
                 {this.props.description}
               </p>
           }
+        </div>
+
+        <div className="m-l-2 flex-static">
+          {this.props.children}
         </div>
       </div>
     )

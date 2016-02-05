@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { addToCart } from '../redux/modules/cart';
-import { getVisibleProducts } from '../redux/modules/products'
-import ProductItem from '../components/ProductItem'
-import ProductsList from '../components/ProductsList'
-import IProduct from '../interfaces/Product';
+import { addToCart } from '../../redux/modules/cart';
+import { getVisibleProducts } from '../../redux/modules/products'
+import ProductItem from '../../components/Product/ProductItem'
+import ProductsList from '../../components/Product/ProductsList'
+import IProduct from '../../interfaces/Product';
 
 interface IProductListProps {
   products?: IProduct[];

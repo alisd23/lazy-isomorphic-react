@@ -3,19 +3,19 @@ import * as React from 'react';
 const path = require('path');
 const express = require('express');
 const _products = require('./products.json');
-import Html from '../helpers/Html';
+import Html from './Html';
 import { renderToString } from 'react-dom/server';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from '../client/configureReducers';
-import coreReducers from '../client/redux/core';
-import ReducerRegistry from '../client/redux/ReducerRegistry';
 import { match, RouterContext } from 'react-router';
 import { browserHistory } from 'react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 
-import configureRoutes from '../client/configureRoutes';
-import { configureServer } from '../client/configureStore';
+import configureRoutes from '../universal/configureRoutes';
+import { configureServer } from '../universal/configureStore';
+import reducers from '../universal/configureReducers';
+import coreReducers from '../universal/redux/core';
+import ReducerRegistry from '../universal/redux/ReducerRegistry';
 
 // Tell react that these global variables exist at compile time
 declare var __DEVELOPMENT__: any;

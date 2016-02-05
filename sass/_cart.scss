@@ -1,0 +1,42 @@
+
+@import './variables';
+
+@mixin action-button($size: 50px, $color: white, $bg: $gray-light) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $bg;
+  color: $color;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    background-color: darken($bg, 10%);
+  }
+}
+
+.add-button {
+  @include action-button(65px, white, $green);
+
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+
+  &[disabled] {
+    color: $gray-light;
+    background-color: $gray-lighter;
+  }
+}
+
+.remove-button {
+  @include action-button(30px, white, $red);
+
+  box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+}

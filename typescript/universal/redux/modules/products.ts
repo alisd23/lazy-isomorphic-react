@@ -1,8 +1,11 @@
 import IProduct from '../../interfaces/Product';
-import shop from '../../api/shop';
+import shop from '../../../client/api/shop';
 
 // Constants
-import { ADD_TO_CART, IAddToCartAction } from './cart';
+import {
+  ADD_TO_CART, IAddToCartAction,
+  REMOVE_FROM_CART, IRemoveFromCartAction
+} from './cart';
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
 export interface IProductsState {
@@ -15,22 +18,23 @@ const initialState: IProductsState = {};
 //           Handler          //
 //----------------------------//
 
-export default function handle(state: IProductsState = initialState, action) : IProductsState {
+export default function handle(products: IProductsState = initialState, action) : IProductsState {
   switch (action.type) {
-    case RECEIVE_PRODUCTS:
+    case RECEIVE_PRODUCTS: {}
       const newProductsMap = {};
       (action as IReceiveProductsAction).products.forEach((product) => {
         newProductsMap[product.id] = product;
       });
       return Object.assign(
         {},
-        state,
+        products,
         newProductsMap
       );
-    case ADD_TO_CART:
-      const productId: number = (action as IAddToCartAction).productId;
+    case ADD_TO_CART: {
+      action as IAddToCartAction;
+      const productId: number = action.productId;
       if (productId) {
-        const product: IProduct = state[productId];
+        const product: IProduct = products[productId];
         const newProduct = Object.assign(
           {},
           product,
@@ -38,12 +42,31 @@ export default function handle(state: IProductsState = initialState, action) : I
         );
         return Object.assign(
           {},
-          state,
+          products,
           { [productId]: newProduct }
         );
       }
+    }
+    case REMOVE_FROM_CART: {
+      action as IRemoveFromCartAction;
+      const productId = action.productId;
+      const quantityRemoved = action.quantity;
+      if (productId) {
+        const product: IProduct = products[productId];
+        const newProduct = Object.assign(
+          {},
+          product,
+          { quantity: product.quantity + quantityRemoved }
+        );
+        return Object.assign(
+          {},
+          products,
+          { [productId]: newProduct }
+        );
+      }
+    }
     default:
-      return state;
+      return products;
   }
 }
 

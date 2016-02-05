@@ -6,8 +6,6 @@ interface IProductsListProps {
 
 class ProductsList extends React.Component<IProductsListProps, {}> {
   render() : React.ReactElement<IProductsListProps>  {
-    // Import styles
-    require('../../../sass/common.scss');
 
     return (
       <div className="p-x-2 p-y-3">

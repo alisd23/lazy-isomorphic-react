@@ -7,14 +7,14 @@ import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import { createDevTools } from 'redux-devtools';
 
-import ReducerRegistry from './redux/ReducerRegistry';
+import ReducerRegistry from '../universal/redux/ReducerRegistry';
 
-import configureRoutes from './configureRoutes';
-import { configureClient } from './configureStore';
+import configureRoutes from '../universal/configureRoutes';
+import { configureClient } from '../universal/configureStore';
 import { match } from 'react-router';
 
-import coreReducers from './redux/core';
-import productPage from './redux/modules/productPage';
+import coreReducers from '../universal/redux/core';
+import productPage from '../universal/redux/modules/productPage';
 
 const reducerRegistry = new ReducerRegistry(coreReducers);
 

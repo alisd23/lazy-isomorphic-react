@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { checkout } from '../redux/modules/cart'
+import { checkout } from '../../redux/modules/cart'
 import { routeActions } from 'react-router-redux';
-import { getTotal, getProducts } from '../redux/modules/cart'
-import CartComponent from '../components/Cart'
-import Product from '../components/Product';
-import IProduct from '../interfaces/Product';
+import { getTotal, getProducts } from '../../redux/modules/cart'
+import CartComponent from '../../components/Cart/Cart'
+import IProduct from '../../interfaces/Product';
 
 interface ICartProps {
   products?: IProduct[];
