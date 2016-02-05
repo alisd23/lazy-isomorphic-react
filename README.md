@@ -11,10 +11,6 @@ See the related blog post [here]()
 #### Install dependencies
 `npm install`
 
-**IMPORTANT**
-Copy the contents of `vendor/react-router` into `node_modules/react-router`.
-Overwrite the folders. We need the react-router **master** branch (should be fixed
-  soon when react-router releases the next minor version)  
 
 #### Development
 
