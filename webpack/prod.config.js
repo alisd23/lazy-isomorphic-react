@@ -3,6 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const CleanPlugin = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
@@ -22,7 +23,7 @@ module.exports = {
 	verbose: true,
 	colors: true,
 	'display-error-details': true,
-	context: path.resolve(__dirname, '..'),
+	context: projectRootPath,
   progress: true,
 	entry: ['./javascript/client/app.js'],
 	output: {
@@ -36,7 +37,9 @@ module.exports = {
 			[assetsPath],
 			{ root: projectRootPath }
 		),
-
+		new CopyPlugin([
+			{ from: 'assets', to: 'assets' }
+		]),
 		// css files from the extract-text-plugin loader
     // new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: false}),
     extractSASS,
@@ -75,6 +78,7 @@ module.exports = {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
+			{ test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' }
 		]
 	},
 

@@ -21,8 +21,6 @@ module.exports = function(grunt) {
       main: {
         files: [
           { expand: true, src: ['assets/**/*'], dest: 'build/' },
-          { expand: true, src: ['icons/**/*'], dest: 'build/' },
-          { expand: true, src: ['lib/**/*'], dest: 'build/' },
           { expand: true, cwd: 'typescript', src: ['**/*.json'], dest: 'javascript/' },
           { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf'], dest: 'assets/fonts/' },
           { expand: true, flatten: true, src: ['node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff'], dest: 'assets/fonts/' },
