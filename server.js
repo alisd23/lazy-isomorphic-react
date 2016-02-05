@@ -2,7 +2,7 @@
 const webPackServer = require('./javascript/server/webpack-server').default;
 const apiServer = require('./javascript/server/backend-server').default;
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9000;
 const PROD = process.env.NODE_ENV === 'production';
 
 /**

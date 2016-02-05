@@ -47,7 +47,7 @@ export default class NavbarComponent extends React.Component<INavbarProps, {}> {
             </ul>
             <div className="flex-static">
               <span className="small-caps small">Balance: </span>
-              <span><strong> £{this.props.user.balance}</strong></span>
+              <span><strong> £{this.props.user.balance.toFixed()}</strong></span>
             </div>
           </nav>
         </div>
