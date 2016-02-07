@@ -8,3 +8,9 @@
 @import './type';
 @import './alerts';
 @import './helpers';
+@import './transitions';
+
+.main-container {
+  position: relative;
+  overflow-y: auto;
+}

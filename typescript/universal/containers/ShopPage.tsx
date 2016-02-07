@@ -12,7 +12,7 @@ class Main extends React.Component<{}, {}> {
     require('../../../sass/shopPage.scss');
 
     return (
-      <div className="p-b-3">
+      <div className="container p-b-3">
         <h2 className="text-xs-center p-y-3 small-caps"><strong>SHOP</strong></h2>
         <hr/>
         <ProductList />

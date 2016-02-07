@@ -30,7 +30,7 @@ export default class ProductContainer extends React.Component<IProductComponentP
     }
 
     return (
-      <div id="product-page">
+      <div id="product-page" className="container">
         {
           this.props.product &&
             <div className="p-y-3">

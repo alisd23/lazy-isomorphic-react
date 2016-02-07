@@ -71,6 +71,7 @@
         "./universal/interfaces/AppState.ts",
         "./universal/interfaces/Link.ts",
         "./universal/interfaces/Product.ts",
+        "./universal/interfaces/RoutingState.ts",
         "./universal/interfaces/User.ts",
         "./universal/redux/core.ts",
         "./universal/redux/modules/alertManager.ts",

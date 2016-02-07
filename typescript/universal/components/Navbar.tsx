@@ -19,7 +19,7 @@ export default class NavbarComponent extends React.Component<INavbarProps, {}> {
   render() : React.ReactElement<{}> {
 
     return (
-      <div className="bg-faded p-y-1">
+      <div className="flex-static bg-faded p-y-1">
         <div className="container">
           <nav className="navbar navbar-light container-fluid flex row-center">
             <a className="navbar-brand m-r-2 flex-static" onClick={() => this.props.clickNavLink('/')}>

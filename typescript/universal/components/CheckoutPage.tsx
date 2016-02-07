@@ -20,7 +20,7 @@ export default class CheckoutPageComponent extends React.Component<ICheckoutPage
     require('../../../sass/checkoutPage.scss');
 
     return (
-      <div id="checkout-page" className="p-b-3">
+      <div id="checkout-page" className="container p-b-3">
         <h2 className="text-xs-center p-y-3 small-caps"><strong>CHECKOUT</strong></h2>
         <hr/>
         <div className="p-y-3">

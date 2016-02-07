@@ -1,14 +1,18 @@
 import * as React from 'react';
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import Navbar from './Navbar';
 import Alerts from './Alerts/GlobalAlerts';
+import IAppState from '../interfaces/AppState';
 import config from '../../config';
+import { ILocation } from 'history';
 const Helmet = require('react-helmet');
 
 
 interface IAppProps {
-  children: React.ReactElement<any>[];
+  children: React.ReactElement<any>;
+  location?: ILocation;
 }
 
 class App extends React.Component<IAppProps, {}> {
@@ -16,15 +20,16 @@ class App extends React.Component<IAppProps, {}> {
   render() : React.ReactElement<{}> {
     // Import styles
     require('../../../sass/common.scss');
+    console.log(this.props.location.pathname);
 
     return (
       <div>
         <Helmet {...config.app.head}/>
-        <Navbar />
         <Alerts />
         <div className="cover">
-          <div className="container">
-            {this.props.children}
+          <Navbar />
+          <div className="main-container flex-expand">
+            { this.props.children }
           </div>
         </div>
       </div>
@@ -32,7 +37,13 @@ class App extends React.Component<IAppProps, {}> {
   }
 }
 
+function mapStateToProps(state: IAppState) {
+  return {
+    location: state.routing.location
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   null
 )(App)
