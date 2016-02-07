@@ -16,8 +16,9 @@ export default {
       .catch((err) => console.debug(err));
   },
 
-  buyProducts(payload: any, callback: Function, timeout?: number) {
-    setTimeout(() => callback(), timeout || TIMEOUT)
+  buyProducts(payload: any, successCB: Function, errorCB, timeout?: number) {
+    // Simulate 50% chance of error
+    setTimeout(() => Math.random() > 0.5 ? successCB() : errorCB(), timeout = TIMEOUT)
   }
 
 };

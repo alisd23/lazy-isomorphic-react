@@ -10,23 +10,6 @@ import ReducerRegistry from './redux/ReducerRegistry';
 if(typeof require.ensure !== "function") require.ensure = function(d, c) { c(require) };
 if(typeof require.include !== "function") require.include = function() {};
 
-interface IContentData {
-  callback: Function;
-  component: Function;
-  stylesheet?: string;
-  reducer?: { name: string, reducer: Function };
-  reducerRegistry?: ReducerRegistry;
-}
-
-function loadContent(contentData: IContentData) {
-  const { callback, component, reducer, reducerRegistry } = contentData;
-
-  // Lazy load extra content
-  if (reducer)
-    reducerRegistry.register({ [reducer.name]: reducer.reducer });
-
-  callback(null, component);
-}
 
 export default function configureRoutes(reducerRegistry) {
   return (

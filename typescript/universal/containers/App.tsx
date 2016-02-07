@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import Navbar from './Navbar';
+import Alerts from './Alerts/GlobalAlerts';
 import config from '../../config';
 const Helmet = require('react-helmet');
 
@@ -20,8 +21,11 @@ class App extends React.Component<IAppProps, {}> {
       <div>
         <Helmet {...config.app.head}/>
         <Navbar />
-        <div className="container">
-          {this.props.children}
+        <Alerts />
+        <div className="cover">
+          <div className="container">
+            {this.props.children}
+          </div>
         </div>
       </div>
     )

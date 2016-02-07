@@ -1,7 +1,7 @@
 
 import IProduct from '../../interfaces/Product';
 import shop from '../../../client/api/shop';
-import { CHECKOUT_REQUEST, CHECKOUT_FAILURE, ICheckoutAction } from './cart';
+import { CHECKOUT_REQUEST, CHECKOUT_ERROR, ICheckoutAction } from './cart';
 import IUser from '../../interfaces/User';
 
 const initialState: IUser = {
@@ -22,7 +22,7 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
         user,
         { balance: user.balance -= Number((action as ICheckoutAction).total) }
       );
-    case CHECKOUT_FAILURE:
+    case CHECKOUT_ERROR:
     return Object.assign({},
       user,
       { balance: user.balance += Number((action as ICheckoutAction).total) }

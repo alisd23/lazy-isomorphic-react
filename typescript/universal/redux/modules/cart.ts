@@ -3,11 +3,13 @@ import IProduct from '../../interfaces/Product';
 import IAction from '../../interfaces/Action';
 import shop from '../../../client/api/shop';
 import { IProductsState, getProduct } from './products';
+import { ADD_ALERT, addAlert } from './alertManager';
+import AlertTypes, { alertClasses } from '../../constants/AlertTypes';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
-export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE';
+export const CHECKOUT_ERROR = 'CHECKOUT_FAILURE';
 export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
 
 interface ICartItem {
@@ -28,8 +30,13 @@ const initialState: ICartState = {}
 export default function handle(cart: ICartState = initialState, action) : ICartState {
   switch (action.type) {
     case CHECKOUT_REQUEST:
+      // Empty cart
       return initialState;
-    case CHECKOUT_FAILURE:
+    case CHECKOUT_SUCCESS:
+      console.log("CHECKOUT SUCCESS");
+      return action.cart;
+    case CHECKOUT_ERROR:
+      console.log("CHECKOUT ERROR");
       return action.cart;
     case ADD_TO_CART: {
       action as IAddToCartAction;
@@ -77,16 +84,38 @@ export function checkout(products: IProduct[]) {
      cart,
      total: Number(getTotal(products, cart))
    }
+
+   // Dispatch checkout request (Optimistic UI)
    dispatch(checkoutRequestAction);
 
-   shop.buyProducts(products, () => {
-     dispatch({
-       type: CHECKOUT_SUCCESS,
-       cart
-     });
+   shop.buyProducts(products,
+     // Success
+     () => {
+       dispatch({
+         type: CHECKOUT_SUCCESS,
+         cart: getState().cart  // Return whatever CURRENT cart value is
+       });
+       dispatch(addAlert({
+         title: 'Thanks for shopping!',
+         content: `Your purchase of <strong>${getTotal(getState().products, cart)}</strong> was successful`,
+         type: AlertTypes.SUCCESS
+       }));
+     },
+     // ERROR
+     () => {
+       dispatch({
+         type: CHECKOUT_ERROR,
+         cart // Return cart value before checkout action occurred
+       });
+       dispatch(addAlert({
+         title: 'Checkout error :(',
+         content: 'Sorry, a checkout error occured when trying to buy these items',
+         type: AlertTypes.ERROR
+       }));
+     }
      // Replace the line above with line below to rollback on failure:
      // dispatch({ type: types.CHECKOUT_FAILURE, cart })
-   });
+   );
  }
 }
 

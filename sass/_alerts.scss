@@ -1,0 +1,49 @@
+
+@import './variables';
+
+.global-alerts {
+  position: fixed;
+  z-index: 1000;
+  top: 120px; left: 10px;
+  bottom: 0;
+
+  .alert {
+    position: relative;
+    cursor: pointer;
+    width: 400px;
+    background-color: white;
+    padding: 1.25rem 1.5rem;
+    border: 4px solid transparent;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+      transform: scale(0.95);
+    }
+
+    &.error { border-color: rgba($red, 0.6); }
+    &.success { border-color: rgba($green, 0.6); }
+    &.info { border-color: rgba($blue, 0.6); }
+  }
+}
+
+
+// FROM
+.global-alert-enter,
+.global-alert-leave.global-alert-leave-active {
+  left: -100%;
+}
+
+// TO
+.global-alert-leave,
+.global-alert-enter.global-alert-enter-active {
+  left: 0;
+}
+
+// TRANSITION
+.global-alert-enter.global-alert-enter-active,
+.global-alert-leave.global-alert-leave-active {
+  transition: left 0.3s ease-in-out;
+}
