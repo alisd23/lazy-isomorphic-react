@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         livereload: true
       },
       assets: {
-        files: ['index.html', 'assets/**/*', 'typescript/**/*.json'],
+        files: ['assets/**/*', 'typescript/**/*.json'],
         tasks: ['copy', 'restart-server']
       },
       express: {

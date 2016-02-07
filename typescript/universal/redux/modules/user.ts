@@ -23,10 +23,10 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
         { balance: user.balance -= Number((action as ICheckoutAction).total) }
       );
     case CHECKOUT_ERROR:
-    return Object.assign({},
-      user,
-      { balance: user.balance += Number((action as ICheckoutAction).total) }
-    );
+      return Object.assign({},
+        user,
+        { balance: user.balance += (action as ICheckoutAction).total }
+      );
     default:
       return user;
   };
@@ -37,6 +37,6 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
 //           Helpers          //
 //----------------------------//
 
-export function getBalance(user: IUser) {
+export function getBalance(user: IUser) : string {
   return user.balance.toFixed(2);
 }

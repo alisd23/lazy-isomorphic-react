@@ -17,8 +17,8 @@ export default {
   },
 
   buyProducts(payload: any, successCB: Function, errorCB, timeout?: number) {
-    // Simulate 50% chance of error
-    setTimeout(() => Math.random() > 0.5 ? successCB() : errorCB(), timeout = TIMEOUT)
+    // Simulate 40% chance of error
+    setTimeout(() => Math.random() > 0.4 ? successCB() : errorCB(), timeout = TIMEOUT)
   }
 
 };

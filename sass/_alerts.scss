@@ -6,10 +6,12 @@
   z-index: 1000;
   top: 120px; left: 10px;
   bottom: 0;
+  pointer-events: none;
 
   .alert {
     position: relative;
     cursor: pointer;
+    pointer-events: all;
     width: 400px;
     background-color: white;
     padding: 1.25rem 1.5rem;

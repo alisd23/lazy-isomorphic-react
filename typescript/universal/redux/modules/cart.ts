@@ -33,10 +33,8 @@ export default function handle(cart: ICartState = initialState, action) : ICartS
       // Empty cart
       return initialState;
     case CHECKOUT_SUCCESS:
-      console.log("CHECKOUT SUCCESS");
       return action.cart;
     case CHECKOUT_ERROR:
-      console.log("CHECKOUT ERROR");
       return action.cart;
     case ADD_TO_CART: {
       action as IAddToCartAction;
@@ -105,7 +103,8 @@ export function checkout(products: IProduct[]) {
      () => {
        dispatch({
          type: CHECKOUT_ERROR,
-         cart // Return cart value before checkout action occurred
+         cart, // Return cart value before checkout action occurred
+         total: Number(getTotal(products, cart))
        });
        dispatch(addAlert({
          title: 'Checkout error :(',

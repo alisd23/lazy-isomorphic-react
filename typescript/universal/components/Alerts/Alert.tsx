@@ -6,7 +6,7 @@ import { alertClasses } from '../../constants/AlertTypes';
 const Helmet = require('react-helmet');
 const classNames = require('classnames');
 
-const ALERT_LIFESPAN = 300000;
+const ALERT_LIFESPAN = 4000;
 interface IAlertProps {
   key?: any;
   alert?: IAlert;
@@ -14,20 +14,24 @@ interface IAlertProps {
 }
 
 export default class Alert extends React.Component<IAlertProps, {}> {
+  alertTimeout: number;
 
   componentDidMount() {
-    setTimeout(this.props.dismissAlert, ALERT_LIFESPAN);
+    this.alertTimeout = setTimeout(this.props.dismissAlert, ALERT_LIFESPAN);
   }
 
   render() : React.ReactElement<IAlertProps> {
-    console.log(this.props.alert);
-
     return (
       <div className={classNames("alert", alertClasses[this.props.alert.type])}
-          onClick={() => this.props.dismissAlert()}>
+          onClick={() => this.dismissAlert()}>
         <h5>{this.props.alert.title}</h5>
         <p className="small" dangerouslySetInnerHTML={{ __html: this.props.alert.content }}></p>
       </div>
     )
+  }
+
+  private dismissAlert() {
+    this.props.dismissAlert();
+    clearTimeout(this.alertTimeout);
   }
 }
