@@ -20,7 +20,6 @@ class App extends React.Component<IAppProps, {}> {
   render() : React.ReactElement<{}> {
     // Import styles
     require('../../../sass/common.scss');
-    console.log(this.props.location.pathname);
 
     return (
       <div>
