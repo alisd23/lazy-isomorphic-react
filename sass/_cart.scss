@@ -40,3 +40,19 @@
   box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.2);
   padding: 0.3rem;
 }
+
+.quantity-controls {
+  display: inline-flex;
+  vertical-align: middle;
+  cursor: pointer;
+  flex-direction: column;
+  transition: all 0.4s ease;
+
+  i {
+    color: #bbb;
+
+    &:hover {
+      color: #999;
+    }
+  }
+}

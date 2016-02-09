@@ -7,6 +7,7 @@ const Helmet = require('react-helmet');
 const classNames = require('classnames');
 
 const ALERT_LIFESPAN = 4000;
+
 interface IAlertProps {
   key?: any;
   alert?: IAlert;

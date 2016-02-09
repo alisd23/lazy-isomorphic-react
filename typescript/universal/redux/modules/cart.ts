@@ -8,6 +8,7 @@ import AlertTypes, { alertClasses } from '../../constants/AlertTypes';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
 export const CHECKOUT_ERROR = 'CHECKOUT_FAILURE';
 export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
@@ -29,16 +30,23 @@ const initialState: ICartState = {}
 
 export default function handle(cart: ICartState = initialState, action) : ICartState {
   switch (action.type) {
+
+    //---------------------//
+    //  CHECKOUT HANDLERS  //
+    //---------------------//
     case CHECKOUT_REQUEST:
       // Empty cart
       return initialState;
     case CHECKOUT_SUCCESS:
-      return action.cart;
-    case CHECKOUT_ERROR:
-      return action.cart;
+    case CHECKOUT_ERROR: {
+      const { cart } = action as ICheckoutAction;
+      return cart;
+    }
+    //------------------------//
+    //  ADD NEW ITEM TO CART  //
+    //------------------------//
     case ADD_TO_CART: {
-      action as IAddToCartAction;
-      const productId = action.productId as number;
+      const { productId } = action as IAddToCartAction;
       const newCart = Object.assign(
         {},
         cart,
@@ -51,9 +59,31 @@ export default function handle(cart: ICartState = initialState, action) : ICartS
       );
       return newCart;
     }
+    //-------------------------//
+    //  REMOVE ITEM FROM CART  //
+    //-------------------------//
     case REMOVE_FROM_CART: {
-      action as IRemoveFromCartAction;
-      const productId = action.productId;
+      const { productId } = action as IRemoveFromCartAction;
+      const newCart = Object.assign(
+        {},
+        cart,
+        {
+          [productId]: {
+            id: productId,
+            quantity: (cart[productId] ? cart[productId].quantity : 0) - 1
+          }
+        }
+      );
+      if (newCart[productId].quantity <= 0) {
+        delete newCart[productId];
+      }
+      return newCart;
+    }
+    //-------------------------//
+    //  DELETE ITEM FROM CART  //
+    //-------------------------//
+    case DELETE_FROM_CART: {
+      const { productId } = action as IDeleteFromCartAction;
       const newCart = Object.assign(
         {},
         cart
@@ -132,14 +162,27 @@ export function addToCart(productId: number) {
 
 export function removeFromCart(productId: number) {
   return (dispatch, getState) => {
-    const cartProduct: IProduct = getState().cart[productId];
+    const cartProduct = getState().cart[productId];
     if (cartProduct && cartProduct.quantity > 0) {
       const removeFromCartAction: IRemoveFromCartAction = {
         type: REMOVE_FROM_CART,
-        productId: productId,
-        quantity: cartProduct.quantity
+        productId: productId
       }
       dispatch(removeFromCartAction);
+    }
+  }
+}
+
+export function deleteFromCart(productId: number) {
+  return (dispatch, getState) => {
+    const cartProduct: IProduct = getState().cart[productId];
+    if (cartProduct) {
+      const deleteFromCartAction: IDeleteFromCartAction = {
+        type: DELETE_FROM_CART,
+        productId: productId,
+        oldQuantity: cartProduct.quantity
+      }
+      dispatch(deleteFromCartAction);
     }
   }
 }
@@ -157,7 +200,10 @@ export interface IAddToCartAction extends IAction {
 }
 export interface IRemoveFromCartAction extends IAction {
   productId: number;
-  quantity: number;
+}
+export interface IDeleteFromCartAction extends IAction {
+  productId: number;
+  oldQuantity: number;
 }
 
 

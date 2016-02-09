@@ -4,7 +4,8 @@ import shop from '../../../client/api/shop';
 // Constants
 import {
   ADD_TO_CART, IAddToCartAction,
-  REMOVE_FROM_CART, IRemoveFromCartAction
+  REMOVE_FROM_CART, IRemoveFromCartAction,
+  DELETE_FROM_CART, IDeleteFromCartAction
 } from './cart';
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
@@ -20,9 +21,14 @@ const initialState: IProductsState = {};
 
 export default function handle(products: IProductsState = initialState, action) : IProductsState {
   switch (action.type) {
-    case RECEIVE_PRODUCTS: {}
+
+    //--------------------------------//
+    //  RECEIVE PRODUCTS FROM SERVER  //
+    //--------------------------------//
+    case RECEIVE_PRODUCTS: {
+      const { products } = action as IReceiveProductsAction;
       const newProductsMap = {};
-      (action as IReceiveProductsAction).products.forEach((product) => {
+      products.forEach((product) => {
         newProductsMap[product.id] = product;
       });
       return Object.assign(
@@ -30,9 +36,13 @@ export default function handle(products: IProductsState = initialState, action) 
         products,
         newProductsMap
       );
+    }
+    //------------------------//
+    //  ADD NEW ITEM TO CART  //
+    //------------------------//
     case ADD_TO_CART: {
-      action as IAddToCartAction;
-      const productId: number = action.productId;
+      const { productId} = action as IAddToCartAction;
+
       if (productId) {
         const product: IProduct = products[productId];
         const newProduct = Object.assign(
@@ -46,17 +56,20 @@ export default function handle(products: IProductsState = initialState, action) 
           { [productId]: newProduct }
         );
       }
+      break;
     }
+    //-------------------------//
+    //  REMOVE ITEM FROM CART  //
+    //-------------------------//
     case REMOVE_FROM_CART: {
-      action as IRemoveFromCartAction;
-      const productId = action.productId;
-      const quantityRemoved = action.quantity;
+      const { productId} = action as IRemoveFromCartAction;
+
       if (productId) {
         const product: IProduct = products[productId];
         const newProduct = Object.assign(
           {},
           product,
-          { quantity: product.quantity + quantityRemoved }
+          { quantity: product.quantity + 1 }
         );
         return Object.assign(
           {},
@@ -64,6 +77,28 @@ export default function handle(products: IProductsState = initialState, action) 
           { [productId]: newProduct }
         );
       }
+      break;
+    }
+    //-------------------------//
+    //  DELETE ITEM FROM CART  //
+    //-------------------------//
+    case DELETE_FROM_CART: {
+      const { productId, oldQuantity} = action as IDeleteFromCartAction;
+
+      if (productId) {
+        const product: IProduct = products[productId];
+        const newProduct = Object.assign(
+          {},
+          product,
+          { quantity: product.quantity + oldQuantity }
+        );
+        return Object.assign(
+          {},
+          products,
+          { [productId]: newProduct }
+        );
+      }
+      break;
     }
     default:
       return products;

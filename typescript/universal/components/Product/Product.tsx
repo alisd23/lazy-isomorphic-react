@@ -11,6 +11,8 @@ interface IProductProps {
   title: string;
   description?: string;
   children?: React.ReactElement<any>[];
+  quantityControls?: React.ReactElement<any>;
+  removeButton?: React.ReactElement<any>;
   push?: (String) => any;
 }
 
@@ -32,6 +34,7 @@ class Product extends React.Component<IProductProps, {}> {
           <h4>
             <span>£{this.props.price}</span>
             <span className="small"> {this.props.quantity ? `x ${this.props.quantity}` : null}</span>
+            {this.props.quantityControls}
           </h4>
           {
             this.props.description &&
@@ -41,9 +44,12 @@ class Product extends React.Component<IProductProps, {}> {
           }
         </div>
 
-        <div className="m-l-2 flex-static">
-          {this.props.children}
-        </div>
+        {
+          this.props.removeButton &&
+            <div className="m-l-2 flex-static">
+              {this.props.removeButton}
+            </div>
+        }
       </div>
     )
   }

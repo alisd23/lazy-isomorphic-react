@@ -27,7 +27,7 @@ class ProductItem extends React.Component<IProductItemProps, {}> {
         <div className="flex-static">
           <div
             onClick={this.props.onAddToCartClicked}
-            className="add-button"
+            className="add-button m-l-1"
             disabled={!product.quantity}>
             {
               product.quantity > 0
