@@ -108,7 +108,7 @@ export function checkout(products: IProduct[]) {
        });
        dispatch(addAlert({
          title: 'Checkout error :(',
-         content: 'Sorry, a checkout error occured when trying to buy these items',
+         content: 'Sorry, a checkout error occurs 40% of the time, this application consistently doesn\'t work very well.',
          type: AlertTypes.ERROR
        }));
      }
