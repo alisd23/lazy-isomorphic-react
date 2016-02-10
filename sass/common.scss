@@ -8,9 +8,16 @@
 @import './type';
 @import './alerts';
 @import './helpers';
+@import './spinners';
 @import './transitions';
 
 .main-container {
   position: relative;
   overflow-y: auto;
+}
+
+#page-loader {
+  justify-content: center;
+  padding-top: 300px;
+  pointer-events: none;
 }

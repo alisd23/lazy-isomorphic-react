@@ -3,6 +3,7 @@ import classnames = require('classnames');
 import { connect } from 'react-redux';
 import { routeActions } from 'react-router-redux';
 import { checkout, getProducts, getTotal } from '../redux/modules/cart';
+import { endLoading } from '../redux/modules/global'
 
 import IProduct from '../interfaces/Product';
 
@@ -11,6 +12,7 @@ import CheckoutPageComponent from '../components/CheckoutPage'
 
 interface ICheckoutPageContainerProps {
   push?: (String) => any;
+  endLoading?: Function;
   checkout?: (products: IProduct[]) => any;
   products: IProduct[];
   total: number;
@@ -18,6 +20,10 @@ interface ICheckoutPageContainerProps {
 interface ICheckoutPageContainerState {}
 
 class ProductContainer extends React.Component<ICheckoutPageContainerProps, ICheckoutPageContainerState> {
+
+  componentDidMount(): void {
+    this.props.endLoading();
+  }
 
   render() : React.ReactElement<ICheckoutPageContainerProps> {
     return (
@@ -46,6 +52,6 @@ export default connect(
   mapStateToProps,
   Object.assign({},
     routeActions,
-    { checkout }
+    { checkout, endLoading }
   ) as any
 )(ProductContainer)

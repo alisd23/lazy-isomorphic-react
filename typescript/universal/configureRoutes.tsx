@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {IndexRoute, Route} from 'react-router';
+import { IndexRoute, Route } from 'react-router';
 
+import { startLoading, endLoading } from './redux/modules/global';
 import App from './containers/App';
 import Main from './containers/ShopPage';
 import Product from './containers/ProductPage';
@@ -21,8 +22,10 @@ export default function configureRoutes(reducerRegistry) {
       }} />
       <Route path="/product/:id" getComponent={(location, cb) => {
         require.ensure([], require => {
-          reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
-          cb(null, require('./containers/ProductPage').default);
+          setTimeout(function() {
+            reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
+            cb(null, require('./containers/ProductPage').default);
+          }, 1000);
         });
       }} />
       <Route path="/checkout" getComponent={(location, cb) => {

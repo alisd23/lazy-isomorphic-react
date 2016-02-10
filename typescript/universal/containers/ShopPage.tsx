@@ -1,12 +1,21 @@
 import * as React from 'react';
-import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
+import { connect } from 'react-redux';
+import { routeActions } from 'react-router-redux';
+import { endLoading } from '../redux/modules/global';
 import ProductList from './Product/ProductList';
 import CartContainer from './Cart/Cart';
 
-class Main extends React.Component<{}, {}> {
+interface ShopPageProps {
+  endLoading?: Function;
+}
 
-  render() : React.ReactElement<{}> {
+class Main extends React.Component<ShopPageProps, {}> {
+
+  componentDidMount(): void {
+    this.props.endLoading();
+  }
+
+  render() : React.ReactElement<ShopPageProps> {
     // Import styles
     require('../../../sass/common.scss');
     require('../../../sass/shopPage.scss');
@@ -25,5 +34,8 @@ class Main extends React.Component<{}, {}> {
 
 export default connect(
   null,
-  routeActions as any
+  Object.assign({},
+    routeActions,
+    { endLoading }
+  ) as any
 )(Main)

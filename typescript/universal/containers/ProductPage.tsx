@@ -3,6 +3,7 @@ import classnames = require('classnames');
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
+import { endLoading } from '../redux/modules/global'
 import { getProduct } from '../redux/modules/products'
 import { addToCart } from '../redux/modules/cart';
 import { changeRating } from '../redux/modules/productPage';
@@ -21,10 +22,15 @@ interface ProductPageContainerProps extends IAppPage<ProductParams> {
   maxRating: number;
   addToCart?: Function;
   changeRating?: Function;
+  endLoading?: Function;
   push?: (String) => any;
 }
 
 class ProductPageContainer extends React.Component<ProductPageContainerProps, {}> {
+
+  componentDidMount(): void {
+    this.props.endLoading();
+  }
 
   render() : React.ReactElement<ProductPageContainerProps> {
 
@@ -57,6 +63,6 @@ export default connect(
   mapStateToProps,
   Object.assign({},
     routeActions,
-    { addToCart, changeRating }
+    { addToCart, changeRating, endLoading }
   ) as any
 )(ProductPageContainer)

@@ -41,6 +41,7 @@ export default (PORT) => {
 
     const reducerRegistry = new ReducerRegistry(coreReducers);
     const routes = configureRoutes(reducerRegistry);
+
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
@@ -60,6 +61,7 @@ export default (PORT) => {
 
         const initialState = {
           products,
+          global: { loading: true },
           routing: { location: renderProps.location }
         }
         const store = configureServer(reducerRegistry, initialState);

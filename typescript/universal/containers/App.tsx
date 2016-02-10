@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import Navbar from './Navbar';
 import Alerts from './Alerts/GlobalAlerts';
+import PageLoader from '../components/PageLoader';
 import IAppState from '../interfaces/AppState';
 import config from '../../config';
 import { ILocation } from 'history';
@@ -12,7 +13,8 @@ const Helmet = require('react-helmet');
 
 interface IAppProps {
   children: React.ReactElement<any>;
-  location?: ILocation;
+  location?: ILocation; // React router gives this to us
+  loading?: boolean;
 }
 
 class App extends React.Component<IAppProps, {}> {
@@ -29,6 +31,9 @@ class App extends React.Component<IAppProps, {}> {
           <Navbar />
           <div className="main-container flex-expand">
             { this.props.children }
+            {
+              this.props.loading && <PageLoader />
+            }
           </div>
         </div>
       </div>
@@ -38,7 +43,7 @@ class App extends React.Component<IAppProps, {}> {
 
 function mapStateToProps(state: IAppState) {
   return {
-    location: state.routing.location
+    loading: state.global.loading
   }
 }
 
