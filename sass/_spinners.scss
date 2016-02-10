@@ -1,0 +1,56 @@
+// Loading screen spinner - full screen with grey backdrop
+.loading-screen {
+  z-index: 10;
+  display: none;
+  position: absolute;
+  top:    0;  left:   0;
+  bottom: 0;  right:  0;
+  border-radius: inherit;
+  display: flex;
+
+  &.in {
+    display: block;
+  }
+
+  &.backdrop {
+    background: rgba(white, 0.6);
+  }
+}
+
+@keyframes Spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  @extend .row-xs-center;
+
+  &:before {
+    content: 'Loading…';
+    width: 45px;
+    height: 45px;
+    display: block;
+  }
+  &.spinner-sm:before {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.spinner:not(:required) {
+  &:before {
+    content: '';
+    border-radius: 50%;
+    border: 5px solid rgba(#aaa, 0.4);
+    border-top-color: rgba(#fff, 0.8);
+    animation: Spinner 0.75s linear infinite;
+    -webkit-animation: Spinner 0.75s linear infinite;
+  }
+  &.spinner-sm:before {
+    border-width: 3px;
+  }
+  &.spinner-light:before {
+    border-color: rgba(#eee, 0.4);
+    border-top-color: rgba(#fff, 0.8);
+  }
+}
