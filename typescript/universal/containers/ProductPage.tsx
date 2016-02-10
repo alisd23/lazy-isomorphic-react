@@ -1,15 +1,17 @@
 import * as React from 'react';
 import classnames = require('classnames');
-import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
+import { connect } from 'react-redux';
+import { routeActions } from 'react-router-redux';
+import { ILocation } from 'history';
 
-import { endLoading } from '../redux/modules/global'
-import { getProduct } from '../redux/modules/products'
+import { endLoading } from '../redux/modules/global';
+import { getProduct } from '../redux/modules/products';
 import { addToCart } from '../redux/modules/cart';
 import { changeRating } from '../redux/modules/productPage';
 
 import IProduct from '../interfaces/Product';
 import IAppPage from '../interfaces/AppPage';
+import IAppState from '../interfaces/AppState';
 
 import ProductPageComponent from '../components/ProductPage';
 
@@ -22,14 +24,19 @@ interface ProductPageContainerProps extends IAppPage<ProductParams> {
   maxRating: number;
   addToCart?: Function;
   changeRating?: Function;
+  loading?: boolean;
   endLoading?: Function;
   push?: (String) => any;
+  location?: ILocation; // React router gives this to us
 }
 
 class ProductPageContainer extends React.Component<ProductPageContainerProps, {}> {
 
-  componentDidMount(): void {
-    this.props.endLoading();
+  componentWillMount(): void {
+    this.stopLoading();
+  }
+  componentWillUpdate(nextProps: ProductPageContainerProps): void {
+    this.stopLoading(nextProps);
   }
 
   render() : React.ReactElement<ProductPageContainerProps> {
@@ -49,13 +56,18 @@ class ProductPageContainer extends React.Component<ProductPageContainerProps, {}
     this.props.addToCart(this.props.product.id);
     this.props.push('/');
   }
+  private stopLoading(props = this.props) : void {
+    if (props.loading)
+      props.endLoading(props.location.pathname);
+  }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: IAppState, ownProps) {
   return {
     product: getProduct(state.products, ownProps.params.id),
     rating: state.productPage.rating,
-    maxRating: state.productPage.maxRating
+    maxRating: state.productPage.maxRating,
+    loading: state.global.loading
   }
 }
 

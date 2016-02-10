@@ -25,7 +25,7 @@ export default function configureRoutes(reducerRegistry) {
           setTimeout(function() {
             reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
             cb(null, require('./containers/ProductPage').default);
-          }, 1500);
+          }, 1000);
         });
       }} />
       <Route path="/checkout" getComponent={(location, cb) => {

@@ -3,12 +3,13 @@ import classnames = require('classnames');
 import { connect } from 'react-redux';
 import { routeActions } from 'react-router-redux';
 import { checkout, getProducts, getTotal } from '../redux/modules/cart';
-import { endLoading } from '../redux/modules/global'
+import { endLoading } from '../redux/modules/global';
+import { ILocation } from 'history';
 
 import IProduct from '../interfaces/Product';
 
-import Product from '../components/Product/Product'
-import CheckoutPageComponent from '../components/CheckoutPage'
+import Product from '../components/Product/Product';
+import CheckoutPageComponent from '../components/CheckoutPage';
 
 interface ICheckoutPageContainerProps {
   push?: (String) => any;
@@ -16,13 +17,14 @@ interface ICheckoutPageContainerProps {
   checkout?: (products: IProduct[]) => any;
   products: IProduct[];
   total: number;
+  location?: ILocation; // React router gives this to us
 }
 interface ICheckoutPageContainerState {}
 
 class ProductContainer extends React.Component<ICheckoutPageContainerProps, ICheckoutPageContainerState> {
 
   componentDidMount(): void {
-    this.props.endLoading();
+    this.props.endLoading(this.props.location.pathname);
   }
 
   render() : React.ReactElement<ICheckoutPageContainerProps> {

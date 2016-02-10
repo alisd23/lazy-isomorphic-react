@@ -1,5 +1,6 @@
 
 import IGlobalState from '../../interfaces/GlobalState';
+import IAppState from '../../interfaces/AppState';
 import { UPDATE_LOCATION } from 'react-router-redux';
 
 const START_LOADING = UPDATE_LOCATION;
@@ -44,10 +45,14 @@ export function startLoading() {
   }
 }
 
-export function endLoading() {
-  return (dispatch) => {
-    dispatch({
-      type: END_LOADING
-    });
+export function endLoading(path: string) {
+  return (dispatch, getState) => {
+    const state: IAppState = getState();
+    
+    if (state.routing.location.pathname === path) {
+      dispatch({
+        type: END_LOADING
+      });
+    }
   }
 }
