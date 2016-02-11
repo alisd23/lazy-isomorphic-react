@@ -5,16 +5,21 @@ import { ILocation } from 'history';
 import { endLoading } from '../redux/modules/global';
 import ProductList from './Product/ProductList';
 import CartContainer from './Cart/Cart';
+import IAppState from '../interfaces/AppState';
 
 interface ShopPageProps {
   endLoading?: Function;
+  loading?: boolean;
   location?: ILocation; // React router gives this to us
 }
 
 class Main extends React.Component<ShopPageProps, {}> {
 
-  componentDidMount(): void {
-    this.props.endLoading(this.props.location.pathname);
+  componentWillMount(): void {
+    this.stopLoading();
+  }
+  componentWillUpdate(nextProps: ShopPageProps): void {
+    this.stopLoading(nextProps);
   }
 
   render() : React.ReactElement<ShopPageProps> {
@@ -32,10 +37,21 @@ class Main extends React.Component<ShopPageProps, {}> {
       </div>
     )
   }
+
+  private stopLoading(props = this.props) : void {
+    if (props.loading)
+      props.endLoading(props.location.pathname);
+  }
+}
+
+function mapStateToProps(state: IAppState, ownProps) {
+  return {
+    loading: state.global.loading
+  }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   Object.assign({},
     routeActions,
     { endLoading }

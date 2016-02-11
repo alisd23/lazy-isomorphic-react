@@ -7,6 +7,7 @@ import { endLoading } from '../redux/modules/global';
 import { ILocation } from 'history';
 
 import IProduct from '../interfaces/Product';
+import IAppState from '../interfaces/AppState';
 
 import Product from '../components/Product/Product';
 import CheckoutPageComponent from '../components/CheckoutPage';
@@ -14,6 +15,7 @@ import CheckoutPageComponent from '../components/CheckoutPage';
 interface ICheckoutPageContainerProps {
   push?: (String) => any;
   endLoading?: Function;
+  loading?: boolean;
   checkout?: (products: IProduct[]) => any;
   products: IProduct[];
   total: number;
@@ -23,8 +25,11 @@ interface ICheckoutPageContainerState {}
 
 class ProductContainer extends React.Component<ICheckoutPageContainerProps, ICheckoutPageContainerState> {
 
-  componentDidMount(): void {
-    this.props.endLoading(this.props.location.pathname);
+  componentWillMount(): void {
+    this.stopLoading();
+  }
+  componentWillUpdate(nextProps: ICheckoutPageContainerProps): void {
+    this.stopLoading(nextProps);
   }
 
   render() : React.ReactElement<ICheckoutPageContainerProps> {
@@ -41,12 +46,17 @@ class ProductContainer extends React.Component<ICheckoutPageContainerProps, IChe
     this.props.checkout(this.props.products);
     this.props.push('/');
   }
+  private stopLoading(props = this.props) : void {
+    if (props.loading)
+      props.endLoading(props.location.pathname);
+  }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: IAppState) {
   return {
     products: getProducts(state.products, state.cart),
-    total: getTotal(state.products, state.cart)
+    total: getTotal(state.products, state.cart),
+    loading: state.global.loading
   }
 }
 

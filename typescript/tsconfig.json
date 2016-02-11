@@ -66,6 +66,7 @@
         "./typings/require.d.ts",
         "./universal/configureReducers.ts",
         "./universal/constants/AlertTypes.ts",
+        "./universal/containers/behaviours/page.ts",
         "./universal/interfaces/Action.ts",
         "./universal/interfaces/Alert.ts",
         "./universal/interfaces/AppPage.ts",
