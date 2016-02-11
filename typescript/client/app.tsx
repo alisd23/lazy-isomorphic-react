@@ -27,15 +27,15 @@ const DevTools = createDevTools(
   </DockMonitor>
 )
 
-const routes = configureRoutes(reducerRegistry);
+const initialState = (window as any).__INITIAL_STATE__;
+const store = configureClient(reducerRegistry, DevTools, initialState);
+
+const routes = configureRoutes(reducerRegistry, store);
 
 /**
  * This magic allows router to load correct reducer and components depending on which route we are in
  */
 match({ history: browserHistory, routes } as any, (error, redirectLocation, renderProps) => {
-
-  const initialState = (window as any).__INITIAL_STATE__;
-  const store = configureClient(reducerRegistry, DevTools, initialState);
 
   render(
     <Provider store={store}>
