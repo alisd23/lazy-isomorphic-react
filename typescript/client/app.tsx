@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
+import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import LogMonitor from 'redux-devtools-log-monitor';
@@ -15,6 +16,7 @@ import { match } from 'react-router';
 
 import coreReducers from '../universal/redux/core';
 import productPage from '../universal/redux/modules/productPage';
+import SocketManager from './api/socketManager';
 
 const DevTools = createDevTools(
   <DockMonitor toggleVisibilityKey="ctrl-h"
@@ -34,7 +36,11 @@ const routes = new Routes(reducerRegistry);
 match({ history: browserHistory, routes: routes.configure() } as any, (error, redirectLocation, renderProps) => {
 
   const initialState = (window as any).__INITIAL_STATE__;
-  const store = configureClient(reducerRegistry, DevTools, initialState);
+  const store: Store = configureClient(reducerRegistry, DevTools, initialState);
+
+  const sockets = new SocketManager(store);
+  sockets.connect();
+
   routes.injectStore(store);
 
   render(

@@ -6,7 +6,7 @@ import IUser from '../../interfaces/User';
 
 const initialState: IUser = {
   id: null,
-  balance: 10000,
+  balance: 2000,
   name: 'Guest'
 }
 

@@ -16,6 +16,8 @@ import { configureServer } from '../universal/configureStore';
 import reducers from '../universal/configureReducers';
 import coreReducers from '../universal/redux/core';
 import ReducerRegistry from '../universal/redux/ReducerRegistry';
+const socketIO = require('socket.io');
+const http = require('http');
 
 // Tell react that these global variables exist at compile time
 declare var __DEVELOPMENT__: any;
@@ -25,6 +27,41 @@ declare var webpackIsomorphicTools: any;
 export default (PORT) => {
 
   const app = express();
+  const server = http.Server(app);
+
+  /**
+   *  Start server listening
+   */
+
+  server.listen(PORT, function(error) {
+    if (error) {
+      console.error(error);
+    } else {
+      console.info('==> 🌎 Backend server listening on port %s.', PORT);
+    }
+  });
+
+
+  /**
+   * Setup Sockets
+   */
+
+   const io = new socketIO(server);
+
+   io.on('connection', function (socket) {
+     socket.emit('authenticated', { success: 1 });
+
+     // Emit fake new products every so often
+     let id = _products.length;
+     setInterval(() => {
+       const newProduct = Object.assign({},
+         _products[Math.floor(Math.random() * _products.length)],
+         { id: ++id }
+       );
+
+       socket.emit('new_product', newProduct);
+     }, 15000);
+   });
 
   /**
    *  Middleware
@@ -95,19 +132,6 @@ export default (PORT) => {
   app.get('/products', function(req, res) {
     console.log("Getting products");
     res.status(200).send(_products);
-  });
-
-
-  /**
-   *  Start server listening
-   */
-
-  app.listen(PORT, function(error) {
-    if (error) {
-      console.error(error);
-    } else {
-      console.info('==> 🌎 Backend server listening on port %s.', PORT);
-    }
   });
 
 };

@@ -70,7 +70,8 @@ module.exports = {
 		loaders: [
       {
         test: /\.scss$/,
-        loader: extractSASS.extract('style', ['css', 'resolve-url', 'sass']),
+        loader: extractSASS.extract('style', ['css', 'resolve-url', 'sass'])
+        // loaders: ['style', 'css', 'resolve-url', 'sass'])
 				// include: path.join(__dirname, 'sass')
       },
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },

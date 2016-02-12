@@ -26,11 +26,12 @@ export default function handle(products: IProductsState = initialState, action) 
     //  RECEIVE PRODUCTS FROM SERVER  //
     //--------------------------------//
     case RECEIVE_PRODUCTS: {
-      const { products } = action as IReceiveProductsAction;
+      const newProducts = (action as IReceiveProductsAction).products;
       const newProductsMap = {};
-      products.forEach((product) => {
+      newProducts.forEach((product) => {
         newProductsMap[product.id] = product;
       });
+
       return Object.assign(
         {},
         products,
@@ -111,15 +112,25 @@ export default function handle(products: IProductsState = initialState, action) 
 //----------------------------//
 
 export function getAllProducts() {
- return (dispatch) => {
-   shop.getProducts((products: IProduct[]) => {
-     const receiveProductsAction: IReceiveProductsAction = {
-       type: RECEIVE_PRODUCTS,
-       products: products
-     }
-     dispatch(receiveProductsAction);
-   });
- };
+  return (dispatch) => {
+    shop.getProducts((products: IProduct[]) => {
+      const receiveProductsAction: IReceiveProductsAction = {
+        type: RECEIVE_PRODUCTS,
+        products: products
+      }
+      dispatch(receiveProductsAction);
+    });
+  };
+}
+
+export function newProductReceived(product: IProduct) {
+  return (dispatch) => {
+    const receiveProductsAction: IReceiveProductsAction = {
+      type: RECEIVE_PRODUCTS,
+      products: [product]
+    }
+    dispatch(receiveProductsAction);
+  };
 }
 
 

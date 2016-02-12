@@ -7,6 +7,7 @@ export default (PORT) => {
   const server = new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
+    ws: true,
     proxy: {
       '*' : `http://localhost:${PORT - 1}`
     }

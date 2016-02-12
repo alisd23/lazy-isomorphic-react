@@ -106,17 +106,22 @@ export function checkout(products: IProduct[]) {
  return (dispatch, getState) => {
    const cart: ICartState = getState().cart;
    const products: IProductsState = getState().products;
+   const balance: number = getState().user.balance;
+   const total: number = Number(getTotal(products, cart));
 
    const checkoutRequestAction: ICheckoutAction = {
      type: CHECKOUT_REQUEST,
      cart,
-     total: Number(getTotal(products, cart))
+     total
    }
 
    // Dispatch checkout request (Optimistic UI)
    dispatch(checkoutRequestAction);
 
-   shop.buyProducts(products,
+   shop.buyProducts(
+     getProducts(products, cart),
+     total,
+     balance,
      // Success
      () => {
        dispatch({
@@ -125,20 +130,20 @@ export function checkout(products: IProduct[]) {
        });
        dispatch(addAlert({
          title: 'Thanks for shopping!',
-         content: `Your purchase of <strong>${getTotal(getState().products, cart)}</strong> was successful`,
+         content: `Your purchase of <strong>${total}</strong> was successful`,
          type: AlertTypes.SUCCESS
        }));
      },
      // ERROR
-     () => {
+     (errMsg) => {
        dispatch({
          type: CHECKOUT_ERROR,
          cart, // Return cart value before checkout action occurred
-         total: Number(getTotal(products, cart))
+         total: total
        });
        dispatch(addAlert({
          title: 'Checkout error :(',
-         content: 'Sorry, a checkout error occurs 40% of the time, this application consistently doesn\'t work very well.',
+         content: errMsg || 'Sorry, a checkout error occurs 40% of the time, this application consistently doesn\'t work very well.',
          type: AlertTypes.ERROR
        }));
      }

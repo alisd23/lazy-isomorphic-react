@@ -6,6 +6,13 @@ import IProduct from '../../universal/interfaces/Product';
 
 const TIMEOUT = 100;
 
+interface buyProductsPayload {
+  products: number,
+  total: number,
+  balance: number
+}
+
+
 export default {
 
   // Can handle timeouts here (Simulate loading delay for now)
@@ -16,9 +23,20 @@ export default {
       .catch((err) => console.debug(err));
   },
 
-  buyProducts(payload: any, successCB: Function, errorCB, timeout?: number) {
+  buyProducts(
+    cart: IProduct[],
+    total: number,
+    balance: number,
+    successCB: Function,
+    errorCB: Function,
+    timeout?: number
+  ) {
     // Simulate 40% chance of error
-    setTimeout(() => Math.random() > 0.4 ? successCB() : errorCB(), timeout = TIMEOUT)
+    if (total <= balance) {
+      setTimeout(() => Math.random() > 0.4 ? successCB() : errorCB(), timeout = TIMEOUT);
+    } else {
+      errorCB('Not enough cash money in da bank');
+    }
   }
 
 };

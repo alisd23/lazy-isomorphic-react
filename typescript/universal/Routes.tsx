@@ -10,8 +10,8 @@ import ReducerRegistry from './redux/ReducerRegistry';
 import IAppState from './interfaces/AppState';
 
 // Require ensure shim
-if(typeof require.ensure !== "function") require.ensure = function(d, c) { c(require) };
-if(typeof require.include !== "function") require.include = function() {};
+if(typeof (require as any).ensure !== "function") (require as any).ensure = function(d, c) { c(require) };
+if(typeof (require as any).include !== "function") (require as any).include = function() {};
 
 export default class routes {
 
@@ -35,7 +35,7 @@ export default class routes {
     return (
       <Route path="/" component={App}>
         <IndexRoute getComponent={(location, cb) => {
-          require.ensure([], require => {
+          (require as any).ensure([], require => {
             const component = require('./containers/ShopPage').default;
             // If route has changed since link clicked - do not load page
             if (!this.store) {
@@ -47,7 +47,7 @@ export default class routes {
           });
         }} />
         <Route path="/product/:id" getComponent={(location, cb) => {
-          require.ensure([], require => {
+          (require as any).ensure([], require => {
             setTimeout(() => {
               this.reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
               const component = require('./containers/ProductPage').default;
@@ -62,7 +62,7 @@ export default class routes {
           });
         }} />
         <Route path="/checkout" getComponent={(location, cb) => {
-          require.ensure([], require => {
+          (require as any).ensure([], require => {
             const component = require('./containers/CheckoutPage').default;
             // If route has changed since link clicked - do not load page
             if (!this.store) {
