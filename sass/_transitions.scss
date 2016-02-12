@@ -1,45 +1,24 @@
 
-.page-transition-enter {
-  opacity: 0.01;
-  position: absolute;
-  top: 0;
-  left: -40px;  right: 0;
-}
+// NEW PRODUCT ENTER transition
 
-.page-transition-enter.page-transition-enter-active {
-  opacity: 1;
-  left: 0;
-  transition: all 200ms ease-in-out;
-}
-
-.page-transition-leave {
-  opacity: 1;
-}
-
-.page-transition-leave.page-transition-leave-active {
-  opacity: 0.01;
-  z-index: -1;
-  transition: all 200ms ease-in-out;
-}
-
-
-// FROM
-.slide-in-right-enter,
-.slide-in-right-leave.slide-in-right-leave-active {
+.new-product-enter {
   bottom: 50px;
   opacity: 0;
 }
 
-// TO
-.slide-in-right-leave,
-.slide-in-right-enter.slide-in-right-enter-active {
+.new-product-enter.new-product-enter-active {
+  position: relative;
   bottom: 0;
   opacity: 1;
-}
-
-// TRANSITION
-.slide-in-right-enter.slide-in-right-enter-active,
-.slide-in-right-leave.slide-in-right-leave-active {
-  position: relative;
   transition: bottom 0.5s ease, opacity 0.7s ease;
 }
+
+// .new-product-leave {
+//   opacity: 1;
+// }
+//
+// .new-product-leave.new-product-leave-active {
+//   opacity: 0.01;
+//   z-index: -1;
+//   transition: all 200ms ease-in-out;
+// }

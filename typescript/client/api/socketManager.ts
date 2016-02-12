@@ -34,7 +34,6 @@ export default class SocketManager {
       console.log('Sockets connected', data);
     })
     this._socket.on('new_product', (product) => {
-      // console.log(product);
       this.store.dispatch(newProductReceived(product));
     })
   }

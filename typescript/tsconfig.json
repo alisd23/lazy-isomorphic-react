@@ -27,6 +27,7 @@
         "./universal/components/PageLoader.tsx",
         "./universal/components/Product/Product.tsx",
         "./universal/components/Product/ProductItem.tsx",
+        "./universal/components/Product/ProductListPagination.tsx",
         "./universal/components/Product/ProductsList.tsx",
         "./universal/components/ProductPage.tsx",
         "./universal/configureStore.tsx",

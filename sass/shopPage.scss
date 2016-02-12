@@ -11,3 +11,19 @@
 .cart-list {
   min-width: 300px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  .pagination-link {
+    padding: 0.2rem 0.6rem;
+    font-size: $font-size-lg;
+    cursor: pointer;
+
+    &.active span {
+      color: $blue;
+      border-bottom: 2px solid $blue;
+    }
+  }
+}
