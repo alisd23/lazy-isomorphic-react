@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       },
       options: {
         script: 'server.js',
-        port: 9000
+        port: 9999
       }
     },
     watch: {

@@ -12,6 +12,7 @@ export default (PORT) => {
       '*' : `http://localhost:${PORT - 1}`
     }
   });
+
   server.listen(PORT, 'localhost');
   console.info('==> 🌎  Webpack server listening on port %s.', PORT);
 }
