@@ -1,5 +1,5 @@
 
-See the related blog post [here]()
+See the related blog post [here](http://blog.scottlogic.com/2016/02/05/a-lazy-isomorphic-react-experiment.html)
 
 ## Setup
 
