@@ -6,9 +6,11 @@ import Modal from '../../components/Modal';
 import AddFundsForm from '../../components/AddFundsForm';
 import Modals from '../../constants/Modals';
 import { closeModal } from '../../redux/modules/global';
+import { addFunds } from '../../redux/modules/user';
 
 interface IAddFundsModalProps {
   closeModal?: (modal: Modals) => any;
+  addFunds?: (amount: number) => any;
 }
 interface IAddFundsModalState {}
 
@@ -22,7 +24,7 @@ class AddFundsModal extends React.Component<IAddFundsModalProps, {}> {
         title="Add Funds"
         modalClasses="add-funds-modal"
       >
-        <AddFundsForm onSubmit={() => {}} />
+        <AddFundsForm onSubmit={(amount) => this.props.addFunds(amount)} />
       </Modal>
     );
   }
@@ -36,5 +38,5 @@ function mapStateToProps(state: IAppState) {
 
 export default connect(
   mapStateToProps,
-  { closeModal }
+  { closeModal, addFunds }
 )(AddFundsModal)

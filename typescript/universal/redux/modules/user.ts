@@ -2,8 +2,12 @@
 import IProduct from '../../interfaces/Product';
 import shop from '../../../client/api/shop';
 import { CHECKOUT_REQUEST, CHECKOUT_ERROR, ICheckoutAction } from './cart';
+import { closeModal } from './global';
 import IUser from '../../interfaces/User';
 import IAction from '../../interfaces/Action';
+import Modals from '../../constants/Modals';
+import { ADD_ALERT, addAlert } from './alertManager';
+import AlertTypes, { alertClasses } from '../../constants/AlertTypes';
 
 const ADD_FUNDS = 'ADD_FUNDS';
 
@@ -48,11 +52,19 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
 
 export function addFunds(amount: number) {
   return (dispatch) => {
-    const addFundsAction: IAddFundsAction = {
-      type: ADD_FUNDS,
-      amount: amount
+    if (!isNaN(Number(amount))) {
+      const addFundsAction: IAddFundsAction = {
+        type: ADD_FUNDS,
+        amount: Number(amount)
+      }
+      dispatch(addFundsAction);
+      dispatch(closeModal(Modals.ADD_FUNDS))
+      dispatch(addAlert({
+        title: 'Funds added!',
+        content: `<strong>£${Number(amount).toFixed(2)}</strong> has been added to your account`,
+        type: AlertTypes.SUCCESS
+      }))
     }
-    dispatch(addFundsAction);
   }
 }
 

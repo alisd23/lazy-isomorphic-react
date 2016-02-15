@@ -7,9 +7,7 @@ import IAppState from '../interfaces/AppState';
 interface IAddFundsFormProps {
   onSubmit: Function;
 }
-interface IAddFundsFormState {
-
-}
+interface IAddFundsFormState {}
 
 export default class AddFundsForm extends React.Component<IAddFundsFormProps, {}> {
   render() : React.ReactElement<IAddFundsFormProps> {
@@ -17,9 +15,10 @@ export default class AddFundsForm extends React.Component<IAddFundsFormProps, {}
     return (
       <div className='add-funds-form'>
         <label className="small-caps small text-muted">Amount</label>
-        <input className="form-control form-control-lg" />
+        <input className="form-control form-control-lg" ref="input" />
 
-        <button className="btn btn-block btn-lg btn-success-outline m-t-3">
+        <button className="btn btn-block btn-lg btn-success-outline m-t-3"
+          onClick={() => this.props.onSubmit((this.refs['input'] as any).value)}>
           <span className="small-caps small strong">ADD FUNDS</span>
         </button>
 

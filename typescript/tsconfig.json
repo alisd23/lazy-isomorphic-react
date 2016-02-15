@@ -25,7 +25,6 @@
         "./universal/components/Cart/Cart.tsx",
         "./universal/components/CheckoutPage.tsx",
         "./universal/components/Modal.tsx",
-        "./universal/components/Modals/AddFundsForm.tsx",
         "./universal/components/Navbar.tsx",
         "./universal/components/PageLoader.tsx",
         "./universal/components/Product/Product.tsx",

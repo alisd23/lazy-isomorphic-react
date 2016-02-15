@@ -36,19 +36,19 @@ class App extends React.Component<IAppProps, {}> {
           { /* MAIN SECTION */ }
           <div id ="main-container" className="flex-expand">
             { this.props.children }
-            {
-              this.props.loading && <PageLoader />
-            }
           </div>
+
+          { /* PAGE LOADER */ }
+          {
+            this.props.loading && <PageLoader />
+          }
 
           { /* MODALS */ }
           <div id="modals">
             <ReactCSSTransitionGroup
               transitionName="modal"
               transitionEnterTimeout={500}
-              transitionLeaveTimeout={500}
-            >
-
+              transitionLeaveTimeout={500} >
               {
                 (() => {
                   switch (this.props.openModal) {
@@ -59,7 +59,6 @@ class App extends React.Component<IAppProps, {}> {
                   }
                 })()
               }
-
             </ReactCSSTransitionGroup>
           </div>
 
