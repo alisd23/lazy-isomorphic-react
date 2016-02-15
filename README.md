@@ -9,6 +9,7 @@ See the related blog post [here]()
 
 
 #### Install dependencies
+
 `npm install`
 
 
@@ -17,7 +18,12 @@ See the related blog post [here]()
 `grunt serve:dev`
 
 
-#### production
+#### Production
 
 `grunt build`  
 `grunt serve:prod`
+
+
+#### View Application
+
+Go to `localhost:9999` to see the application

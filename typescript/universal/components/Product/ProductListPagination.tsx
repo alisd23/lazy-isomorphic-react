@@ -18,11 +18,11 @@ class ProductsListPagination extends React.Component<IProductsListPaginationProp
     let linksStart = this.props.page;
     let linksEnd = this.props.page;
 
-    while ((linksEnd - linksStart) < MAX_LINKS) {
+    while ((linksEnd - linksStart) < MAX_LINKS - 1) {
       if (linksEnd < this.props.pages) {
         linksEnd++;
       }
-      if ((linksStart > 1) && ((linksEnd - linksStart) < MAX_LINKS)) {
+      if ((linksStart > 1) && ((linksEnd - linksStart) < MAX_LINKS - 1)) {
         linksStart--;
       }
       if (linksEnd === this.props.pages && linksStart === 1) {
@@ -32,6 +32,17 @@ class ProductsListPagination extends React.Component<IProductsListPaginationProp
 
     const links: JSX.Element[] = [];
 
+    // BACK arrow
+    if (this.props.page > 1) {
+      links.push(
+        <div className="pagination-link" key={'back'}
+          onClick={() => this.props.onPageSelected(this.props.page - 1)}>
+          <i className="material-icons">keyboard_arrow_left</i>
+        </div>
+      )
+    }
+
+    // All page numbers
     for (let i = linksStart; i <= linksEnd; i++) {
       const classes = classNames(
         "pagination-link",
@@ -40,6 +51,16 @@ class ProductsListPagination extends React.Component<IProductsListPaginationProp
       links.push(
         <div className={classes} key={i} onClick={() => this.props.onPageSelected(i)} >
           <span>{i}</span>
+        </div>
+      )
+    }
+
+    // FORWARD arrow
+    if (this.props.page < this.props.pages) {
+      links.push(
+        <div className="pagination-link" key={'forward'}
+          onClick={() => this.props.onPageSelected(this.props.page + 1)}>
+          <i className="material-icons">keyboard_arrow_right</i>
         </div>
       )
     }

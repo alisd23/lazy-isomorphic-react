@@ -30,19 +30,6 @@ export default (PORT) => {
   const server = http.Server(app);
 
   /**
-   *  Start server listening
-   */
-
-  server.listen(PORT, function(error) {
-    if (error) {
-      console.error(error);
-    } else {
-      console.info('==> 🌎 Backend server listening on port %s.', PORT);
-    }
-  });
-
-
-  /**
    * Setup Sockets
    */
 
@@ -60,8 +47,22 @@ export default (PORT) => {
        );
 
        socket.emit('new_product', newProduct);
-     }, 6000);
+     }, 2000);
    });
+
+
+   /**
+    *  Start server listening
+    */
+
+   server.listen(PORT, function(error) {
+     if (error) {
+       console.error(error);
+     } else {
+       console.info('==> 🌎 Backend server listening on port %s.', PORT);
+     }
+   });
+
 
   /**
    *  Middleware

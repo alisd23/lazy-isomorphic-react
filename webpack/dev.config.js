@@ -16,7 +16,7 @@ module.exports = {
 	context: path.resolve(__dirname, '..'),
   progress: true,
 	entry: [
-    'webpack-dev-server/client?http://localhost:9000', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://localhost:9999', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
 		'./javascript/client/app.js'
 	],
