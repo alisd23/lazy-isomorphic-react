@@ -1,4 +1,5 @@
 import IProduct from '../../interfaces/Product';
+import IAction from '../../interfaces/Action';
 import shop from '../../../client/api/shop';
 
 // Constants
@@ -138,8 +139,7 @@ export function newProductReceived(product: IProduct) {
 //      Action interfaces     //
 //----------------------------//
 
-export interface IReceiveProductsAction {
-  type: string;
+export interface IReceiveProductsAction extends IAction {
   products: IProduct[];
 }
 

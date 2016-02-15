@@ -10,7 +10,7 @@ interface IAppState {
   // Core reducers
   global: IGlobalState;
   alertManager: IAlertManagerState;
-  user: IUser[];
+  user: IUser;
   products: IProductsState;
   cart: ICartState;
   routing: IRoutingState;

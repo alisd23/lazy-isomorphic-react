@@ -8,6 +8,7 @@ import ProductItem from '../../components/Product/ProductItem';
 import ProductsList from '../../components/Product/ProductsList';
 import ProductListPagination from '../../components/Product/ProductListPagination';
 import IProduct from '../../interfaces/Product';
+import IAppState from '../../interfaces/AppState';
 
 const PAGE_LENGTH = 10;
 
@@ -77,7 +78,7 @@ class ProductList extends React.Component<IProductListProps, {}> {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: IAppState) {
   return {
     products: getVisibleProducts(state.products).reverse()
   }

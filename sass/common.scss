@@ -10,8 +10,9 @@
 @import './helpers';
 @import './spinners';
 @import './transitions';
+@import './modals';
 
-.main-container {
+#main-container {
   position: relative;
   overflow-y: auto;
 }

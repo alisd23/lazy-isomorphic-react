@@ -1,0 +1,21 @@
+
+@mixin action-button($size: 50px, $color: white, $bg: $gray-light) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $bg;
+  color: $color;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    background-color: darken($bg, 10%);
+  }
+}

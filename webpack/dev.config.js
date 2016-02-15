@@ -22,7 +22,8 @@ module.exports = {
 	],
 	output: {
 		path: path.join(projectRootPath, 'build/'),
-    publicPath: '/',
+		// Need absolute path for sources to work - http://stackoverflow.com/questions/30762323/webpack-must-i-specify-the-domain-in-publicpath-for-url-directive-to-work-in
+    publicPath: 'http://localhost:9999/build/',
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
 	},
@@ -51,8 +52,8 @@ module.exports = {
 			},
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass'],
-				// include: path.join(projectRootPath, 'sass')
+        loaders: ['style', 'css?sourceMap&importLoaders=1', 'sass'],
+				include: path.join(projectRootPath, 'sass')
       },
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -64,10 +65,10 @@ module.exports = {
 
 	// LOADER config
 	cssLoader: {
+		sourceMap: true,
 		modules: false,			// Enables local scoped css (hash-like class names specific to components)
 		localIdentName: '[local]___[hash:base64:5]',		// Name format for local scoped class names (if set)
-		importLoaders: 1,		// Which loaders should be applied to @imported resources (How many after css loader)
-		sourceMap: true
+		importLoaders: 1		// Which loaders should be applied to @imported resources (How many after css loader)
 	},
 	sassLoader: {
 		sourceMap: true,

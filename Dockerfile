@@ -8,7 +8,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-EXPOSE 9000
-ENV NODE_ENV=production PORT=9000
+EXPOSE 9999
+ENV NODE_ENV=production PORT=9999
 
 ENTRYPOINT node server.js

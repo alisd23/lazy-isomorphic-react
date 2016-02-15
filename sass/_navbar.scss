@@ -1,6 +1,16 @@
 
+@import './variables';
+@import './mixins';
+
 .navbar-brand {
   i {
     vertical-align: text-bottom;
   }
+}
+
+.add-funds {
+  @include action-button(24px, white, $blue);
+
+  box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
 }

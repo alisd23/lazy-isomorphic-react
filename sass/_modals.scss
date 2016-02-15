@@ -1,0 +1,48 @@
+
+@import './helpers';
+@import './variables';
+
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  top:  0;  bottom: 0;
+  left: 0;  right:  0;
+
+  .modal-backdrop {
+    @extend .cover;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    position: relative;
+    margin-top: 100px;
+    width: 600px;
+    background-color: white;
+    z-index: $zindex-modal;
+    padding: 4rem;
+    border-radius: 5px;
+    box-shadow: -5px 6px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-header {
+    text-align: center;
+  }
+  .modal-body {
+    margin-top: 3rem;
+  }
+
+  .close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    color: #ccc;
+    padding: 0.2rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+}

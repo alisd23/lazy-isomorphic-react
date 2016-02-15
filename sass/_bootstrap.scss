@@ -1,2 +1,40 @@
 
-@import '../node_modules/bootstrap/scss/bootstrap-flex';
+$enable-flex: true;
+
+// Core variables and mixins
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+// Reset and dependencies
+@import "node_modules/bootstrap/scss/normalize";
+@import "node_modules/bootstrap/scss/print";
+
+// Core CSS
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/images";
+@import "node_modules/bootstrap/scss/code";
+@import "node_modules/bootstrap/scss/grid";
+@import "node_modules/bootstrap/scss/tables";
+@import "node_modules/bootstrap/scss/forms";
+@import "node_modules/bootstrap/scss/buttons";
+
+// Components
+@import "node_modules/bootstrap/scss/dropdown";
+@import "node_modules/bootstrap/scss/input-group";
+@import "node_modules/bootstrap/scss/custom-forms";
+@import "node_modules/bootstrap/scss/nav";
+@import "node_modules/bootstrap/scss/navbar";
+@import "node_modules/bootstrap/scss/labels";
+@import "node_modules/bootstrap/scss/alert";
+
+// Components w/ JavaScript
+// @import "modal";
+@import "node_modules/bootstrap/scss/tooltip";
+@import "node_modules/bootstrap/scss/popover";
+
+// Utility classes
+@import "node_modules/bootstrap/scss/utilities";
+@import "node_modules/bootstrap/scss/utilities-background";
+@import "node_modules/bootstrap/scss/utilities-spacing";
+@import "node_modules/bootstrap/scss/utilities-responsive";

@@ -3,6 +3,9 @@ import IProduct from '../../interfaces/Product';
 import shop from '../../../client/api/shop';
 import { CHECKOUT_REQUEST, CHECKOUT_ERROR, ICheckoutAction } from './cart';
 import IUser from '../../interfaces/User';
+import IAction from '../../interfaces/Action';
+
+const ADD_FUNDS = 'ADD_FUNDS';
 
 const initialState: IUser = {
   id: null,
@@ -27,9 +30,39 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
         user,
         { balance: user.balance += (action as ICheckoutAction).total }
       );
+    case ADD_FUNDS:
+      const { amount } = action as IAddFundsAction;
+      return Object.assign({},
+        user,
+        { balance: user.balance += amount }
+      );
     default:
       return user;
   };
+}
+
+
+//----------------------------//
+//           Actions          //
+//----------------------------//
+
+export function addFunds(amount: number) {
+  return (dispatch) => {
+    const addFundsAction: IAddFundsAction = {
+      type: ADD_FUNDS,
+      amount: amount
+    }
+    dispatch(addFundsAction);
+  }
+}
+
+
+//-------------------------------//
+//       Action Interfaces       //
+//-------------------------------//
+
+interface IAddFundsAction extends IAction {
+  amount: number;
 }
 
 
