@@ -130,7 +130,7 @@ export function checkout(products: IProduct[]) {
        });
        dispatch(addAlert({
          title: 'Thanks for shopping!',
-         content: `Your purchase of <strong>${total}</strong> was successful`,
+         content: `Your purchase of <strong>£${total}</strong> was successful`,
          type: AlertTypes.SUCCESS
        }));
      },

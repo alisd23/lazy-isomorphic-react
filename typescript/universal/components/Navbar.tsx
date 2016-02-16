@@ -48,7 +48,7 @@ export default class NavbarComponent extends React.Component<INavbarProps, {}> {
             </ul>
             <div className="flex row-center flex-static">
               <span className="small-caps small">Balance:&nbsp;</span>
-              <span><strong> £{this.props.user.balance.toFixed()}</strong></span>
+              <span><strong> £{this.props.user.balance.toFixed(2)}</strong></span>
               <div className="add-funds m-l-1"  onClick={this.props.onAddFundsClick}>
                 <i className="material-icons md-18">add</i>
               </div>
