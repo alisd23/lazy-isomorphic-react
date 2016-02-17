@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { Store } from 'redux';
+import { Store, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import LogMonitor from 'redux-devtools-log-monitor';
@@ -15,8 +15,8 @@ import { configureClient } from '../universal/configureStore';
 import { match } from 'react-router';
 
 import coreReducers from '../universal/redux/core';
-import productPage from '../universal/redux/modules/productPage';
 import SocketManager from './api/socketManager';
+
 
 const DevTools = createDevTools(
   <DockMonitor toggleVisibilityKey="ctrl-h"
@@ -56,6 +56,34 @@ match({ history: browserHistory, routes: routes.configure() } as any, (error, re
   render(
     <DevTools store={store} />,
     document.getElementById('dev-tools')
-  )
+  );
+
+
+  //--------------------------//
+  //  HOT RELOADING REDUCERS  //
+  //--------------------------//
+
+  if (__DEVELOPMENT__ && module.hot) {
+
+    // CORE REDUCERS
+    module.hot.accept('../universal/redux/core', () => {
+      console.log("CORE");
+      reducerRegistry.updateReducers(store, require('../universal/redux/core').default);
+    });
+
+    // ADDITIONAL REDUCERS
+    // These reducers are required from the Routes.tsx file so we must also accept
+    // a new routes file
+    module.hot.accept('../universal/Routes', () => {});
+
+    // Product Page
+    require('../universal/redux/modules/productPage').default;
+    module.hot.accept('../universal/redux/modules/productPage', () => {
+      console.log("PRODUCT PAGE");
+      reducerRegistry.updateReducers(store,
+        { productPage: require('../universal/redux/modules/productPage').default }
+      );
+    });
+  }
 
 });

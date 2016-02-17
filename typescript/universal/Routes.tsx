@@ -22,7 +22,6 @@ export default class routes {
     this.reducerRegistry = reducerRegistry;
   }
 
-
   /**
   * Only need to inject this on the CLIENT side for lazy loading
   */
@@ -51,6 +50,7 @@ export default class routes {
             setTimeout(() => {
               this.reducerRegistry.register({ ['productPage']: require('./redux/modules/productPage').default });
               const component = require('./containers/ProductPage').default;
+
               // If route has changed since link clicked - do not load page
               if (!this.store) {
                 cb(null, component);

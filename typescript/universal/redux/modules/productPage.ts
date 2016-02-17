@@ -9,7 +9,7 @@ export interface IProductPageState {
   maxRating?: number;
 }
 const initialState: IProductPageState = {
-  rating: null,
+  rating: 3,
   maxRating: 5
 };
 

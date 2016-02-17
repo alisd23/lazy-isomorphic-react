@@ -73,7 +73,7 @@
         "./typings/redux/redux.d.ts",
         "./typings/socket.io-client.d.ts",
         "./typings/socket.io.d.ts",
-        "./universal/configureReducers.ts",
+        "./typings/webpack.d.ts",
         "./universal/constants/AlertTypes.ts",
         "./universal/constants/Modals.ts",
         "./universal/interfaces/Action.ts",

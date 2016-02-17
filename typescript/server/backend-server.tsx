@@ -13,14 +13,12 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 
 import Routes from '../universal/Routes';
 import { configureServer } from '../universal/configureStore';
-import reducers from '../universal/configureReducers';
 import coreReducers from '../universal/redux/core';
 import ReducerRegistry from '../universal/redux/ReducerRegistry';
 const socketIO = require('socket.io');
 const http = require('http');
 
 // Tell react that these global variables exist at compile time
-declare var __DEVELOPMENT__: any;
 declare var __dirname: any;
 declare var webpackIsomorphicTools: any;
 
