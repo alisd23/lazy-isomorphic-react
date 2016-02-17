@@ -38,7 +38,7 @@ export default function handle(user: IUser = initialState, action: any) : IUser 
       const { amount } = action as IAddFundsAction;
       return Object.assign({},
         user,
-        { balance: user.balance += amount }
+        { balance: user.balance + amount }
       );
     default:
       return user;
