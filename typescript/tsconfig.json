@@ -33,6 +33,7 @@
         "./universal/components/Product/ProductListPagination.tsx",
         "./universal/components/Product/ProductsList.tsx",
         "./universal/components/ProductPage.tsx",
+        "./universal/components/SpringItem.tsx",
         "./universal/configureStore.tsx",
         "./universal/containers/Alerts/GlobalAlerts.tsx",
         "./universal/containers/App.tsx",

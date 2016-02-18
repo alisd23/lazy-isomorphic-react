@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import * as ReactTransitionGroup from 'react-addons-transition-group';
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/modules/cart';
 import { getVisibleProducts } from '../../redux/modules/products';
 import ProductItem from '../../components/Product/ProductItem';
+import SpringItem from '../../components/SpringItem';
 import ProductsList from '../../components/Product/ProductsList';
 import ProductListPagination from '../../components/Product/ProductListPagination';
 import IProduct from '../../interfaces/Product';
 import IAppState from '../../interfaces/AppState';
+
 
 const PAGE_LENGTH = 10;
 
@@ -46,7 +49,7 @@ class ProductList extends React.Component<IProductListProps, {}> {
 
               return (i === this.state.page - 1) &&
                 <div className="page-wrapper" key={i}>
-                  <ReactCSSTransitionGroup
+                  {/*<ReactCSSTransitionGroup
                     transitionName="new-product"
                     transitionEnterTimeout={500}
                     transitionLeave={false} >
@@ -58,7 +61,18 @@ class ProductList extends React.Component<IProductListProps, {}> {
                           onAddToCartClicked={() => this.props.addToCart(product.id)} />
                       )
                     }
-                  </ReactCSSTransitionGroup>
+                  </ReactCSSTransitionGroup>*/}
+                  <ReactTransitionGroup>
+                    {
+                      pageProducts.map(product =>
+                        <SpringItem key={product.id}>
+                          <ProductItem
+                            product={product}
+                            onAddToCartClicked={() => this.props.addToCart(product.id)} />
+                        </SpringItem>
+                      )
+                    }
+                  </ReactTransitionGroup>
                 </div>;
             })
           }
@@ -71,6 +85,7 @@ class ProductList extends React.Component<IProductListProps, {}> {
       </ProductsList>
     );
   }
+
 
   private changePage(page: number) {
     this.setState({ page });

@@ -15,7 +15,7 @@ class ProductItem extends React.Component<IProductItemProps, {}> {
     const { product } = this.props;
 
     return (
-      <div className="m-b-3 flex row-center">
+      <div className="p-y-2 flex row-center">
         <div className="flex-expand">
           <Product
             title={product.title}
