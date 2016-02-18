@@ -14,7 +14,7 @@ interface ISpringItemProps {
 
 export default class SpringItem extends React.Component<ISpringItemProps, {}> {
   defaultSpringConfig: ISpringConfig = {
-    tension: 8,
+    tension: 35,
     friction: 12
   }
   springs: any;
@@ -81,8 +81,8 @@ export default class SpringItem extends React.Component<ISpringItemProps, {}> {
       this.props.springConfig || {}
     );
     const opacityConfig: ISpringConfig = {
-      tension: heightConfig.tension,
-      friction: heightConfig.friction * 2
+      tension: heightConfig.tension * 0.75,
+      friction: heightConfig.friction * 1.2
     };
 
     const heightSpring = springSystem.createSpring(heightConfig.tension, heightConfig.friction);
