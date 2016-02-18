@@ -45,7 +45,7 @@ export default (PORT) => {
        );
 
        socket.emit('new_product', newProduct);
-     }, 2000);
+     }, 7000);
    });
 
 
