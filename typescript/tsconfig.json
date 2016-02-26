@@ -49,6 +49,7 @@
         "./client/api/shop.ts",
         "./client/api/socketManager.ts",
         "./config.ts",
+        "./server/polyfills.ts",
         "./server/webpack-server.ts",
         "./typings/classnames.d.ts",
         "./typings/fetch.d.ts",

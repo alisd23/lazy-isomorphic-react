@@ -12,7 +12,8 @@ const assetsPath = path.resolve(projectRootPath, './build');
 
 module.exports = {
 	cache: true,
-  devtool: 'inline-source-map',
+	inline: false,
+  devtool: 'source-map',
 	context: path.resolve(__dirname, '..'),
   progress: true,
 	entry: [
@@ -29,7 +30,6 @@ module.exports = {
 	},
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.NoErrorsPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
     new webpack.DefinePlugin({
@@ -49,7 +49,7 @@ module.exports = {
 		loaders: [
       {
 				test: /\.jsx?$/,
-				loaders: ['react-hot', 'jsx-loader?harmony'],
+				loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015'],
 				include: path.join(projectRootPath, 'javascript')
 			},
       {

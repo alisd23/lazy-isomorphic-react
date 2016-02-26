@@ -9,7 +9,7 @@ export default (PORT) => {
     hot: true,
     ws: true,
     proxy: {
-      '*' : `http://localhost:${PORT - 1}`
+      '/' : `http://localhost:${PORT - 1}`
     }
   });
 

@@ -1,19 +1,4 @@
 
-// NEW PRODUCT ENTER transition
-
-.new-product-enter {
-  bottom: 50px;
-  opacity: 0;
-}
-
-.new-product-enter.new-product-enter-active {
-  position: relative;
-  bottom: 0;
-  opacity: 1;
-  transition: bottom 0.5s ease, opacity 0.7s ease;
-}
-
-
 // MODAL transitions
 .modal-enter, .modal-leave.modal-leave-active {
   opacity: 0;
@@ -35,6 +20,6 @@
   transition: opacity 0.5s ease;
 
   .modal-content {
-    transition: opacity 0.5s ease, transform 0.35s ease;
+    transition: opacity 0.5s ease, transform 0.4s ease-out;
   }
 }

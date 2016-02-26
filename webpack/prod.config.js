@@ -58,7 +58,6 @@ module.exports = {
 
 		// optimizations
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'commons',
 			filename: 'commons.js'

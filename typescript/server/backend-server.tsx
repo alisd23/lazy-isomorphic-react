@@ -1,4 +1,5 @@
 
+require('./polyfills');
 import * as React from 'react';
 const path = require('path');
 const express = require('express');

@@ -28,7 +28,7 @@ export function configureClient(reducerRegistry, DevTools, initialState) {
   reducerRegistry.setChangeListener((reducers) => {
     store.replaceReducer(combineReducers(reducers))
   });
-
+    
   return store;
 }
 

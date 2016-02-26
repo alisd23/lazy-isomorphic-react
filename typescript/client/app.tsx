@@ -77,12 +77,13 @@ match({ history: browserHistory, routes: routes.configure() } as any, (error, re
     module.hot.accept('../universal/Routes', () => {});
 
     // Product Page
-    require('../universal/redux/modules/productPage').default;
+    System.import('../universal/redux/modules/productPage')
     module.hot.accept('../universal/redux/modules/productPage', () => {
       console.log("PRODUCT PAGE");
-      reducerRegistry.updateReducers(store,
-        { productPage: require('../universal/redux/modules/productPage').default }
-      );
+      System.import('../universal/redux/modules/productPage')
+        .then((reducer) => {
+          reducerRegistry.updateReducers(store, { 'productPage': reducer.default })
+        });
     });
   }
 
