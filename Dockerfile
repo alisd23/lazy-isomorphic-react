@@ -3,10 +3,10 @@ FROM node:slim
 WORKDIR /app
 
 COPY package.json ./
+RUN npm cache clean
 RUN npm install
 
 COPY . ./
-RUN npm cache clean
 RUN npm run build
 
 EXPOSE 9999
