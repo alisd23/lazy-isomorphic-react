@@ -60,15 +60,15 @@ export default class routes {
   private getProductPage(location, cb) {
     if (ENV === 'client') {
       Promise.all([
-        System.import('./containers/productPage'),
+        System.import('./containers/ProductPage'),
         System.import('./redux/modules/productPage')
       ])
         .then(([container, reducer]: any) => this.changeScreen(location, cb, container, { reducer }))
-        .catch(err => console.log('Epic fail: productPage -- ', err));
+        .catch(err => console.log('Epic fail: ProductPage -- ', err));
     } else {
-      (require as any).ensure(['./containers/productPage', './redux/modules/productPage'], require => {
+      (require as any).ensure(['./containers/ProductPage', './redux/modules/productPage'], require => {
         const reducer = { ['productPage']: require('./redux/modules/productPage').default };
-        const container = require('./containers/productPage').default;
+        const container = require('./containers/ProductPage').default;
         this.changeScreen(location, cb, container, reducer)
       });
     }
