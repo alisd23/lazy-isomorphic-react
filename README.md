@@ -1,7 +1,7 @@
 
 See the related blog post [here](http://blog.scottlogic.com/2016/02/05/a-lazy-isomorphic-react-experiment.html)
 
-[See it running here!](http://shopping-cart.alisd.tech/)
+[See it running here!](https://shopping-cart.alisd.io/)
 
 ## Setup
 
